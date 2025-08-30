@@ -1,9 +1,12 @@
-%% UC01 – Cadastrar Produto
 usecaseDiagram
 actor Funcionario as F
 
 rectangle "Sistema" {
-  usecase "Cadastrar Produto" as UC1
+  usecase "Acessar opção 'Cadastrar Produto'" as UC1
+  usecase "Exibir formulário com campos obrigatórios" as UC2
+  usecase "Validar dados e salvar produto" as UC3
 }
 
 F --> UC1
+UC1 --> UC2
+UC2 --> UC3
