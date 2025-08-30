@@ -1,12 +1,6 @@
-usecaseDiagram
-actor Funcionario as F
-
-rectangle "Sistema" {
-  usecase "Acessar opção 'Cadastrar Produto'" as UC1
-  usecase "Exibir formulário com campos obrigatórios" as UC2
-  usecase "Validar dados e salvar produto" as UC3
-}
-
-F --> UC1
-UC1 --> UC2
-UC2 --> UC3
+graph TD
+    F[Funcionário] --> A[Acessar opção "Cadastrar Produto"]
+    A --> B[Exibir formulário com campos obrigatórios]
+    B --> C[Funcionário preenche os campos e confirma]
+    C --> D[Sistema valida dados e salva produto]
+    D --> E[Produto cadastrado com sucesso]
