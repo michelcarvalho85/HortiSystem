@@ -1,0 +1,16 @@
+@startuml
+class Produto {
+    - id: int
+    - nome: string
+    - quantidade: int
+    - valor: decimal
+    - unidadeMedida: string
+    - categoria: string
+    
+    + Cadastrar(): void
+    + ValidarDados(): bool
+    + Editar(): void
+    + Excluir(): void
+    + Visualizar(): string
+}
+@enduml
