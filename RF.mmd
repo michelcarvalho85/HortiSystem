@@ -1,5 +1,4 @@
 ```mermaid
-%%{init: {'theme':'default'}}%%
 usecaseDiagram
 actor Administrador as ADM
 actor Gerente as GER
@@ -10,39 +9,37 @@ actor Cliente as CLI
 actor Sistema as SYS
 actor "Todos os usuários" as ALL
 
-rectangle Sistema {
-  (RF001 - Manter Usuário) as RF001
-  (RF002 - Autenticar login) as RF002
-  (RF003 - Alterar Senha) as RF003
-  (RF004 - Manter Categoria) as RF004
-  (RF005 - Manter Produto) as RF005
-  (RF006 - Consultar Produtos) as RF006
-  (RF007 - Manter Fornecedor) as RF007
-  (RF008 - Manter Compra) as RF008
-  (RF009 - Registrar Itens da Compra) as RF009
-  (RF010 - Atualizar Estoque na Compra) as RF010
-  (RF011 - Controlar Estoque) as RF011
-  (RF012 - Notificar Validade) as RF012
-  (RF013 - Manter Cliente) as RF013
-  (RF014 - Registrar Venda) as RF014
-  (RF015 - Atualizar Estoque na Venda) as RF015
-  (RF016 - Controlar Status de Venda) as RF016
-  (RF017 - Gerar Contas a Receber) as RF017
-  (RF018 - Gerenciar Contas a Receber) as RF018
-  (RF019 - Registrar Desperdício) as RF019
-  (RF020 - Consultar Desperdício) as RF020
-  (RF021 - Gerar Relatórios) as RF021
-  (RF022 - Registrar Ações no Log) as RF022
-  (RF023 - Registrar Lotes) as RF023
-  (RF024 - Rastrear Lote) as RF024
-  (RF025 - Realizar Backup do Sistema) as RF025
-  (RF026 - Controlar Perfis) as RF026
-  (RF027 - Atribuir Permissões) as RF027
-  (RF028 - Registrar Consentimento LGPD) as RF028
-  (RF029 - Revogar Consentimento) as RF029
-  (RF030 - Registrar Solicitações LGPD) as RF030
-  (RF031 - Registrar Resposta à Solicitação LGPD) as RF031
-}
+( RF001 - Manter Usuário ) as RF001
+( RF002 - Autenticar login ) as RF002
+( RF003 - Alterar Senha ) as RF003
+( RF004 - Manter Categoria ) as RF004
+( RF005 - Manter Produto ) as RF005
+( RF006 - Consultar Produtos ) as RF006
+( RF007 - Manter Fornecedor ) as RF007
+( RF008 - Manter Compra ) as RF008
+( RF009 - Registrar Itens da Compra ) as RF009
+( RF010 - Atualizar Estoque na Compra ) as RF010
+( RF011 - Controlar Estoque ) as RF011
+( RF012 - Notificar Validade ) as RF012
+( RF013 - Manter Cliente ) as RF013
+( RF014 - Registrar Venda ) as RF014
+( RF015 - Atualizar Estoque na Venda ) as RF015
+( RF016 - Controlar Status de Venda ) as RF016
+( RF017 - Gerar Contas a Receber ) as RF017
+( RF018 - Gerenciar Contas a Receber ) as RF018
+( RF019 - Registrar Desperdício ) as RF019
+( RF020 - Consultar Desperdício ) as RF020
+( RF021 - Gerar Relatórios ) as RF021
+( RF022 - Registrar Ações no Log ) as RF022
+( RF023 - Registrar Lotes ) as RF023
+( RF024 - Rastrear Lote ) as RF024
+( RF025 - Realizar Backup do Sistema ) as RF025
+( RF026 - Controlar Perfis ) as RF026
+( RF027 - Atribuir Permissões ) as RF027
+( RF028 - Registrar Consentimento LGPD ) as RF028
+( RF029 - Revogar Consentimento ) as RF029
+( RF030 - Registrar Solicitações LGPD ) as RF030
+( RF031 - Registrar Resposta à Solicitação LGPD ) as RF031
 
 ADM --> RF001
 ADM --> RF004
