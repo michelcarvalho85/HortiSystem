@@ -1,4 +1,4 @@
-# 📌 Requisitos Funcionais
+#  Requisitos Funcionais
 
 | Código | Função                                | Descrição                                                                                                                                                     | Ator                                |
 |--------|---------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------|
@@ -33,3 +33,4 @@
 | RF029  | Revogar Consentimento                 | Registrar a revogação do consentimento do cliente.                                                                                                             | Caixa, Gerente                      |
 | RF030  | Registrar Solicitações LGPD           | Registrar e controlar solicitações de acesso, correção, exclusão e portabilidade.                                                                              | Cliente, Gerente                    |
 | RF031  | Registrar Resposta à Solicitação LGPD | Registrar a resposta à solicitação LGPD, incluindo status e observações.                                                                                       | Gerente, Administrador              |
+
