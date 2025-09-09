@@ -1,93 +1,35 @@
-```mermaid
-usecaseDiagram
-actor Administrador as ADM
-actor Gerente as GER
-actor Caixa as CAI
-actor Estoquista as EST
-actor Financeiro as FIN
-actor Cliente as CLI
-actor Sistema as SYS
-actor "Todos os usuários" as ALL
+# 📌 Requisitos Funcionais
 
-( RF001 - Manter Usuário ) as RF001
-( RF002 - Autenticar login ) as RF002
-( RF003 - Alterar Senha ) as RF003
-( RF004 - Manter Categoria ) as RF004
-( RF005 - Manter Produto ) as RF005
-( RF006 - Consultar Produtos ) as RF006
-( RF007 - Manter Fornecedor ) as RF007
-( RF008 - Manter Compra ) as RF008
-( RF009 - Registrar Itens da Compra ) as RF009
-( RF010 - Atualizar Estoque na Compra ) as RF010
-( RF011 - Controlar Estoque ) as RF011
-( RF012 - Notificar Validade ) as RF012
-( RF013 - Manter Cliente ) as RF013
-( RF014 - Registrar Venda ) as RF014
-( RF015 - Atualizar Estoque na Venda ) as RF015
-( RF016 - Controlar Status de Venda ) as RF016
-( RF017 - Gerar Contas a Receber ) as RF017
-( RF018 - Gerenciar Contas a Receber ) as RF018
-( RF019 - Registrar Desperdício ) as RF019
-( RF020 - Consultar Desperdício ) as RF020
-( RF021 - Gerar Relatórios ) as RF021
-( RF022 - Registrar Ações no Log ) as RF022
-( RF023 - Registrar Lotes ) as RF023
-( RF024 - Rastrear Lote ) as RF024
-( RF025 - Realizar Backup do Sistema ) as RF025
-( RF026 - Controlar Perfis ) as RF026
-( RF027 - Atribuir Permissões ) as RF027
-( RF028 - Registrar Consentimento LGPD ) as RF028
-( RF029 - Revogar Consentimento ) as RF029
-( RF030 - Registrar Solicitações LGPD ) as RF030
-( RF031 - Registrar Resposta à Solicitação LGPD ) as RF031
-
-ADM --> RF001
-ADM --> RF004
-ADM --> RF021
-ADM --> RF025
-ADM --> RF026
-ADM --> RF027
-ADM --> RF031
-
-ALL --> RF002
-ALL --> RF003
-ALL --> RF006
-
-GER --> RF004
-GER --> RF005
-GER --> RF007
-GER --> RF008
-GER --> RF011
-GER --> RF013
-GER --> RF016
-GER --> RF018
-GER --> RF020
-GER --> RF021
-GER --> RF024
-GER --> RF028
-GER --> RF029
-GER --> RF030
-GER --> RF031
-
-CAI --> RF013
-CAI --> RF014
-CAI --> RF016
-CAI --> RF028
-CAI --> RF029
-
-EST --> RF005
-EST --> RF008
-EST --> RF009
-EST --> RF011
-EST --> RF012
-EST --> RF019
-EST --> RF023
-EST --> RF024
-
-FIN --> RF018
-CLI --> RF030
-
-SYS --> RF010
-SYS --> RF015
-SYS --> RF017
-SYS --> RF022
+| Código | Função                                | Descrição                                                                                                                                                     | Ator                                |
+|--------|---------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------|
+| RF001  | Manter Usuário                        | Permitir o cadastro de usuários com nome, login, senha, telefone e tipo (admin, gerente, caixa, estoquista). Status, acesso.                                   | Administrador                       |
+| RF002  | Autenticar login                      | Permitir que o usuário se autentique com login e senha.                                                                                                        | Todos os usuários                   |
+| RF003  | Alterar Senha                         | Permitir que o usuário altere sua senha.                                                                                                                       | Todos os usuários                   |
+| RF004  | Manter Categoria                      | Permitir cadastrar categorias de produtos com nome, descrição, alteração ou exclusão.                                                                          | Administrador, Gerente              |
+| RF005  | Manter Produto                        | Permitir o cadastro de produtos com dados como nome, descrição, preço, categoria, estoque mínimo, ativar ou desativar produtos no sistema.                     | Gerente, Estoquista                  |
+| RF006  | Consultar Produtos                    | Listar todos os produtos com filtros por nome, categoria, ativo/inativo.                                                                                       | Todos os usuários                   |
+| RF007  | Manter Fornecedor                     | Permitir o cadastro de fornecedores com dados completos, editar ou excluir fornecedores cadastrados.                                                           | Gerente                             |
+| RF008  | Manter Compra                         | Permitir registrar compras com fornecedor, forma de pagamento, nota fiscal e status.                                                                           | Gerente, Estoquista                  |
+| RF009  | Registrar Itens da Compra             | Permitir adicionar produtos à compra com quantidade, preço e validade.                                                                                         | Estoquista                          |
+| RF010  | Atualizar Estoque na Compra           | Atualizar automaticamente o estoque ao finalizar uma compra.                                                                                                   | Sistema                             |
+| RF011  | Controlar Estoque                     | Registrar e exibir a quantidade atual, última entrada e saída de cada produto.                                                                                 | Estoquista, Gerente                  |
+| RF012  | Notificar Validade                    | Alertar sobre produtos com validade próxima ou vencida.                                                                                                        | Estoquista                          |
+| RF013  | Manter Cliente                        | Permitir o cadastro de clientes com dados pessoais e de contato, edição e consulta dos dados dos clientes.                                                     | Caixa, Gerente                      |
+| RF014  | Registrar Venda                       | Registrar vendas com cliente, usuário, valor total e forma de pagamento, adicionar itens a uma venda com quantidade, valor e subtotal.                         | Caixa                               |
+| RF015  | Atualizar Estoque na Venda            | Atualizar o estoque automaticamente ao concluir uma venda.                                                                                                     | Sistema                             |
+| RF016  | Controlar Status de Venda             | Controlar o status da venda (concluída, pendente, cancelada).                                                                                                  | Caixa, Gerente                      |
+| RF017  | Gerar Contas a Receber                | Gerar contas a receber vinculadas às vendas.                                                                                                                   | Sistema                             |
+| RF018  | Gerenciar Contas a Receber            | Permitir registrar pagamento, vencimento e status das contas (pago, pendente, atrasado).                                                                       | Gerente, Financeiro                 |
+| RF019  | Registrar Desperdício                 | Registrar desperdícios com data, motivo e quantidade por produto.                                                                                              | Estoquista                          |
+| RF020  | Consultar Desperdício                 | Permitir consulta ao histórico de desperdícios por produto.                                                                                                    | Gerente                             |
+| RF021  | Gerar Relatórios                      | Permitir geração de relatórios de estoque, vendas e desperdício.                                                                                               | Gerente, Administrador              |
+| RF022  | Registrar Ações no Log                | Registrar ações dos usuários, entidade afetada, data e IP de origem.                                                                                           | Sistema                             |
+| RF023  | Registrar Lotes                       | Registrar lotes com produto, quantidade, validade, data de entrada e origem.                                                                                   | Estoquista                          |
+| RF024  | Rastrear Lote                         | Permitir rastrear produtos por lote no sistema.                                                                                                                | Gerente, Estoquista                  |
+| RF025  | Realizar Backup do Sistema            | Permitir realizar backups completos ou incrementais com data, tamanho e status.                                                                                | Administrador                       |
+| RF026  | Controlar Perfis                      | Permitir cadastro de perfis de acesso com permissões em JSON.                                                                                                  | Administrador                       |
+| RF027  | Atribuir Permissões                   | Atribuir perfis de controle de acesso a usuários.                                                                                                              | Administrador                       |
+| RF028  | Registrar Consentimento LGPD          | Permitir registrar consentimento de clientes para tratamento de dados.                                                                                         | Caixa, Gerente                      |
+| RF029  | Revogar Consentimento                 | Registrar a revogação do consentimento do cliente.                                                                                                             | Caixa, Gerente                      |
+| RF030  | Registrar Solicitações LGPD           | Registrar e controlar solicitações de acesso, correção, exclusão e portabilidade.                                                                              | Cliente, Gerente                    |
+| RF031  | Registrar Resposta à Solicitação LGPD | Registrar a resposta à solicitação LGPD, incluindo status e observações.                                                                                       | Gerente, Administrador              |
