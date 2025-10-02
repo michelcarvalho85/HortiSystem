@@ -14,7 +14,6 @@ public enum UnidadeMedida {
     UnidadeMedida(String descricao) {
         this.descricao = descricao;
     }
-
     public String getDescricao() {
         return descricao;
     }
