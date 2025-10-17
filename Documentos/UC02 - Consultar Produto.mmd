@@ -1,5 +1,13 @@
+---
+title: Fluxo Alternativo - Caso de Uso "Consultar Produto"
+---
 graph TD
-    F[Funcionário] --> A[Acessar opção Consultar Produto]
-    A --> B[Exibir campos de filtro]
-    B --> C[Funcionário define filtros e solicita busca]
-    C --> D[Sistema exibe lista de produtos filtrados]
+    A[Usuário solicita busca sem preencher filtros]
+    A --> B[Sistema retorna todos os produtos cadastrados]
+    B --> C[Usuário aplica novo filtro manualmente]
+    C --> D[Sistema atualiza a lista conforme novo critério]
+
+    subgraph Erro de Conexão
+        E[❌ Falha ao conectar ao banco de dados]
+        E --> F[Sistema exibe mensagem de erro e registra no log]
+    end
