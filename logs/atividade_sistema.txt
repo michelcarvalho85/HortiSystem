@@ -1,0 +1,3 @@
+[2025-10-20 23:38:58] Usuário: Natanael | Ação: Cadastro de Usuário | Detalhes: Usuário criado com sucesso.
+[2025-10-20 23:44:21] Usuário: dono | Ação: Cadastro de Usuário | Detalhes: Usuário criado com sucesso.
+[2025-10-21 01:11:10] Usuário: michel | Ação: Cadastro de Usuário | Detalhes: Usuário criado com sucesso.

@@ -1,0 +1,27 @@
+<configuration>
+
+    <property name="LOG_HOME" value="logs" />
+
+    <appender name="FILE_AUDIT" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_HOME}/audit.log</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- rotação por dia; não usamos %i para evitar incompatibilidade -->
+            <fileNamePattern>${LOG_HOME}/archive/audit.%d{yyyy-MM-dd}.log.gz</fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <!-- opcional: limite total de arquivos arquivados (Logback 1.3+ tem <totalSizeCap>) -->
+        </rollingPolicy>
+
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="com.HortiSystem.Sistema.audit" level="INFO" additivity="false">
+        <appender-ref ref="FILE_AUDIT"/>
+    </logger>
+
+    <root level="INFO">
+        <!-- deixe aqui seu console appender padrão -->
+    </root>
+</configuration>
