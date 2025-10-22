@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>HortiSystem — Gestão Moderna</title>
+    <!-- Fonte moderna -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root{
+          --bg:#0f1724;          /* fundo escuro */
+          --card:#0b1220;        /* cartão */
+          --muted:#98a0ad;       /* texto secundário */
+          --accent-1:#22c55e;    /* verde vivo */
+          --accent-2:#06b6d4;    /* azul */
+          --glass: rgba(255,255,255,0.06);
+          --radius:16px;
+          --maxw:1100px;
+          color-scheme: dark;
+        }
+
+        *{box-sizing:border-box}
+        html,body{height:100%;}
+        body{
+          margin:0;
+          font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+          background: radial-gradient(1200px 400px at 10% 10%, rgba(34,197,94,0.06), transparent),
+                      radial-gradient(1000px 350px at 90% 90%, rgba(6,182,212,0.04), transparent),
+                      var(--bg);
+          color:#e6eef6;
+          -webkit-font-smoothing:antialiased;
+          line-height:1.45;
+          padding:32px;
+          display:flex;
+          justify-content:center;
+          align-items:flex-start;
+        }
+
+        .shell{
+          width:100%;
+          max-width:var(--maxw);
+        }
+
+        /* Top bar (sem JS) */
+        .topbar{
+          display:flex;
+          justify-content:space-between;
+          align-items:center;
+          gap:16px;
+          background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+          padding:14px 18px;
+          border-radius:12px;
+          border:1px solid rgba(255,255,255,0.03);
+          backdrop-filter: blur(6px);
+          margin-bottom:20px;
+        }
+
+        .brand{
+          display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;
+        }
+        .brand .logo{
+          width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--accent-1),var(--accent-2));
+          display:flex;align-items:center;justify-content:center;font-weight:700;font-size:18px;box-shadow:0 6px 18px rgba(2,6,23,0.6);
+        }
+        .brand .title{font-weight:700;font-size:18px}
+        .nav{display:flex;gap:10px;align-items:center}
+        .nav a{color:var(--muted);text-decoration:none;padding:8px 12px;border-radius:10px;font-weight:600;font-size:14px}
+        .nav a:hover{color:#fff;background:linear-gradient(90deg, rgba(255,255,255,0.03), transparent)}
+
+        /* user area */
+        .user-area{display:flex;align-items:center;gap:10px}
+        .user-btn{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:12px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.03);cursor:default}
+        .logout-btn{display:inline-flex;align-items:center;padding:8px 12px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:var(--muted);text-decoration:none}
+
+        /* Hero */
+        .hero{
+          display:grid;
+          grid-template-columns: 1fr 420px;
+          gap:28px;
+          align-items:center;
+          margin-bottom:28px;
+        }
+
+        .hero-card{
+          background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+          border-radius:var(--radius);
+          padding:32px;
+          border:1px solid rgba(255,255,255,0.03);
+          box-shadow:0 10px 30px rgba(2,6,23,0.6);
+        }
+
+        .eyebrow{font-weight:700;color:var(--accent-1);font-size:13px;letter-spacing:0.06em}
+        h1{margin:8px 0 12px;font-size:34px;line-height:1.03}
+        p.lead{Color:var(--muted);margin:0 0 20px}
+
+        .cta-row{display:flex;gap:10px;flex-wrap:wrap}
+        .btn{
+          display:inline-flex;align-items:center;gap:10px;padding:12px 16px;border-radius:12px;text-decoration:none;font-weight:700;border:0;cursor:pointer
+        }
+        .btn-primary{background:linear-gradient(90deg,var(--accent-1),var(--accent-2));color:#02131a}
+        .btn-ghost{background:transparent;color:var(--accent-1);border:1px solid rgba(34,197,94,0.12)}
+
+        /* Admin quick panel */
+        .admin-grid{display:flex;gap:12px;margin-top:18px}
+        .admin-card{flex:1;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit}
+        .admin-card .icon{font-size:22px}
+        .admin-card .label{font-weight:700}
+        .admin-card .sub{color:var(--muted);font-size:13px}
+
+        /* Right panel quick summary */
+        .summary{
+          background:linear-gradient(180deg, rgba(255,255,255,0.02), var(--glass));
+          padding:18px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);
+        }
+        .summary h4{margin:0 0 12px}
+        .stat{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-top:1px dashed rgba(255,255,255,0.02)}
+        .stat:first-of-type{border-top:0}
+        .stat .num{font-weight:800}
+        .muted{color:var(--muted)}
+
+        /* Features grid */
+        .features{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:18px}
+        .feature{
+          background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));
+          padding:18px;border-radius:14px;border:1px solid rgba(255,255,255,0.03);min-height:110px;display:flex;flex-direction:column;justify-content:center;gap:6px;
+          transition:transform 0.28s ease, box-shadow 0.28s ease;
+        }
+        .feature:hover{transform:translateY(-8px);box-shadow:0 18px 40px rgba(2,6,23,0.6)}
+        .feature .icon{font-size:22px}
+        .feature h5{margin:0}
+
+        /* Footer */
+        footer{margin-top:26px;color:var(--muted);font-size:13px;text-align:center}
+
+        /* Responsividade */
+        @media (max-width:980px){
+          .hero{grid-template-columns:1fr;}
+          .features{grid-template-columns:repeat(2,1fr)}
+          .admin-grid{flex-direction:column}
+        }
+        @media (max-width:560px){
+          body{padding:18px}
+          .features{grid-template-columns:1fr}
+          .nav a{padding:8px 10px}
+          h1{font-size:26px}
+        }
+    </style>
+</head>
+<body>
+<div class="shell">
+
+    <!-- Topbar (sem JS) -->
+    <header class="topbar" role="banner">
+        <a class="brand" href="/">
+            <div class="logo">HS</div>
+            <div class="title">HortiSystem</div>
+        </a>
+
+        <!-- links principais (rotas originais mantidas) -->
+        <nav class="nav" role="navigation" aria-label="Acesso rápido">
+            <a href="/produto/novo">Cadastrar</a>
+            <a href="/produto/lista">Produtos</a>
+            <!-- Alterado: Vendas -> Caixa (rota apontando para localhost:8080/caixa) -->
+            <a href="http://localhost:8080/caixa">Caixa</a>
+            <a href="/relatorios">Relatórios</a>
+            <!-- Alterado: Funcionários -> aponta para localhost:8080/funcionarios/novo -->
+            <a href="http://localhost:8080/funcionarios/novo">Funcionários</a>
+            <!-- Alterado: Usuários -> aponta para localhost:8080/usuario/novo -->
+            <a href="http://localhost:8080/usuario/novo">Usuários</a>
+        </nav>
+
+        <!-- Área do usuário (botão sem funcionalidade) -->
+        <div class="user-area" aria-hidden="false">
+            <!-- Botão de usuário: sem comportamento — apenas visual -->
+            <div class="user-btn" role="button" aria-label="Usuário">
+                <div style="width:34px;height:34px;border-radius:8px;background:linear-gradient(135deg,var(--accent-1),var(--accent-2));display:flex;align-items:center;justify-content:center;font-weight:700">A</div>
+                <div style="display:flex;flex-direction:column;min-width:120px">
+                    <div style="font-weight:700;font-size:13px">Administrador</div>
+                    <div class="muted" style="font-size:12px">admin@horti.local</div>
+                </div>
+            </div>
+
+            <!-- Botão Sair: sem funcionalidade implementada -->
+            <a class="logout-btn" href="#" role="button" aria-label="Sair">🔒 Sair</a>
+        </div>
+    </header>
+
+    <!-- Hero + painel lateral -->
+    <main class="hero-card hero" role="main">
+
+        <div>
+            <div class="eyebrow">Sistema para Hortifrúti</div>
+            <h1>Gestão simples — visual moderno</h1>
+            <p class="lead">Organize estoque, preços e categorias com painéis limpos, rápidos e fáceis de navegar — sem JavaScript.</p>
+
+            <div class="cta-row" style="margin-top:18px">
+                <a class="btn btn-primary" href="/produto/novo">➕ Cadastrar Produto</a>
+                <a class="btn btn-ghost" href="/produto/lista">📋 Ver Lista</a>
+            </div>
+
+            <!-- Painel administrativo rápido (atalhos para áreas principais) -->
+            <div class="admin-grid" aria-label="Atalhos administrativos">
+                <a class="admin-card" href="/produto/lista">
+                    <div class="icon">📦</div>
+                    <div>
+                        <div class="label">Produtos</div>
+                        <div class="sub">Gerenciar catálogo e estoque</div>
+                    </div>
+                </a>
+
+                <a class="admin-card" href="/funcionarios">
+                    <div class="icon">👥</div>
+                    <div>
+                        <div class="label">Funcionários</div>
+                        <div class="sub">Cadastrar e gerenciar equipes</div>
+                    </div>
+                </a>
+
+                <a class="admin-card" href="/usuario/lista">
+                    <div class="icon">🔐</div>
+                    <div>
+                        <div class="label">Usuários</div>
+                        <div class="sub">Controle de acesso e permissões</div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Recursos em destaque -->
+            <section style="margin-top:20px">
+                <div class="features">
+                    <div class="feature">
+                        <div class="icon">📦</div>
+                        <h5>Controle de Estoque</h5>
+                        <div class="muted">Níveis, validade e movimentações.</div>
+                    </div>
+
+                    <div class="feature">
+                        <div class="icon">💰</div>
+                        <h5>Gestão de Preços</h5>
+                        <div class="muted">Preço por unidade, promoções e histórico.</div>
+                    </div>
+
+                    <div class="feature">
+                        <div class="icon">📊</div>
+                        <h5>Categorização</h5>
+                        <div class="muted">Filtrar e agrupar por categoria e fornecedor.</div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Painel lateral com resumo rápido -->
+        <aside class="summary" aria-labelledby="summary-title">
+            <h4 id="summary-title">Resumo Rápido</h4>
+            <div class="stat">
+                <div>
+                    <div class="muted">Produtos</div>
+                    <div class="num">1.254</div>
+                </div>
+                <div class="muted">Ativos</div>
+            </div>
+            <div class="stat">
+                <div>
+                    <div class="muted">Baixo estoque</div>
+                    <div class="num">23</div>
+                </div>
+                <div class="muted">Atenção</div>
+            </div>
+            <div class="stat">
+                <div>
+                    <div class="muted">Último backup</div>
+                    <div class="num">2025-10-20</div>
+                </div>
+                <div class="muted">OK</div>
+            </div>
+
+            <div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap">
+                <a class="btn btn-ghost" href="/estoque/alertas">⚠️ Alertas</a>
+                <a class="btn btn-ghost" href="/fornecedores">🚚 Fornecedores</a>
+            </div>
+
+        </aside>
+
+    </main>
+
+    <footer>
+        © <span id="year">2025</span> HortiSystem — Interface moderna e acessível • Desenvolvido para hortifrúti
+    </footer>
+
+</div>
+</body>
+</html>
