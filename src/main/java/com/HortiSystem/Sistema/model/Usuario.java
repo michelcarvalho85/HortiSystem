@@ -24,8 +24,7 @@ public class Usuario implements UserDetails {
     @Column(unique = true, nullable = false)
     private String username;
 
-    @Column(unique = true, nullable = false)
-    private String usuario;
+
 
     @Column(nullable = false)
     private String password; // senha criptografada
@@ -56,6 +55,8 @@ public class Usuario implements UserDetails {
     @Override
     public String getUsername() { return this.username; }
 
+    public String getNome() { return "nome"; }
+
     @Override
     public boolean isAccountNonExpired() { return true; }
 
@@ -69,12 +70,11 @@ public class Usuario implements UserDetails {
     public boolean isEnabled() { return this.ativo; }
 
     // setter de dataConsentimento (Lombok também gera, mas deixamos explícito)
+
     public void setDataConsentimentoLgpd(LocalDateTime dataConsentimentoLgpd) {
         this.dataConsentimentoLgpd = dataConsentimentoLgpd;
     }
 
-    public String getNome() {
-        return "nome";
-    }
+
 }
 
