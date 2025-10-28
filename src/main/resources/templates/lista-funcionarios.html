@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>HortiSystem — Lista de Funcionários</title>
+    
+
+    <!-- HortiSystem Tema Moderno (global) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/horti-modern.css">
+
+</head>
+<body>
+<div class="shell">
+    <header class="topbar"><div style="width:36px;height:36px;border-radius:8px;background:linear-gradient(135deg,#22c55e,#06b6d4);display:flex;align-items:center;justify-content:center">HS</div><div style="font-weight:800">HortiSystem</div></header>
+
+    <main class="card">
+        <h1>📋 Lista de Funcionários</h1>
+
+        <div th:if="${success}" style="margin-bottom:12px;color:#b7f3d0">✅ <span th:text="${success}"></span></div>
+        <div th:if="${error}" style="margin-bottom:12px;color:#ffadad">⚠️ <span th:text="${error}"></span></div>
+
+        <div style="overflow:auto">
+            <table class="table" role="table" aria-label="Tabela de funcionários">
+                <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>CPF</th>
+                    <th>Cargo</th>
+                    <th>Email</th>
+                    <th>Salário</th>
+                    <th>Status</th>
+                    <th>Ações</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${#lists.isEmpty(funcionarios)}">
+                    <td colspan="7" class="empty">📭 Nenhum funcionário cadastrado</td>
+                </tr>
+
+                <tr th:each="funcionario : ${funcionarios}">
+                    <td th:text="${funcionario.nome}"></td>
+                    <td th:text="${funcionario.cpf}"></td>
+                    <td th:text="${funcionario.cargo}"></td>
+                    <td th:text="${funcionario.email}"></td>
+                    <td th:text="'R$ ' + ${#numbers.formatDecimal(funcionario.salario, 1, 2, 'POINT')}"></td>
+                    <td>
+                        <span th:if="${funcionario.ativo}" style="color:#b7f3d0;font-weight:700">✅ Ativo</span>
+                        <span th:unless="${funcionario.ativo}" style="color:#ffadad;font-weight:700">⛔ Inativo</span>
+                    </td>
+                    <td>
+                        <a th:href="@{/funcionarios/editar/{id}(id=${funcionario.id})}" class="btn btn-edit">✏️ Editar</a>
+
+                        <form th:if="${funcionario.ativo}" th:action="@{/funcionarios/demitir/{id}(id=${funcionario.id})}" method="post" style="display:inline">
+                            <button type="submit" class="btn btn-demissao" onclick="return confirm('Tem certeza que deseja demitir este funcionário?')">🗑️ Demitir</button>
+                        </form>
+
+                        <form th:unless="${funcionario.ativo}" th:action="@{/funcionarios/reativar/{id}(id=${funcionario.id})}" method="post" style="display:inline">
+                            <button type="submit" class="btn btn-reativar">🔄 Reativar</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="menu">
+            <a th:href="@{/funcionarios/novo}" style="color:var(--muted);text-decoration:none;margin-right:12px">👥 Cadastrar Novo Funcionário</a>
+            <a th:href="@{/produto/lista}" style="color:var(--muted);text-decoration:none;margin-right:12px">📦 Ver Produtos</a>
+            <a th:href="@{/vendas}" style="color:var(--muted);text-decoration:none">💰 Ir para Vendas</a>
+        </div>
+    </main>
+
+    <footer>© <span th:text="${T(java.time.Year).now()}"/> HortiSystem</footer>
+</div>
+</body>
+</html>

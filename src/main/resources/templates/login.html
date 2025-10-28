@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>HortiSystem — Acessar Sistema</title>
+    
+
+    <!-- HortiSystem Tema Moderno (global) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/horti-modern.css">
+
+</head>
+<body class="login-page">
+<div class="shell">
+    <!-- Topbar simplificada: SOMENTE a marca (removidos links de cadastro/afins) -->
+    <header class="topbar" role="banner">
+        <a class="brand" href="/">
+            <div class="logo">HS</div>
+            <div class="title" style="font-weight:700">HortiSystem</div>
+        </a>
+    </header>
+
+    <main class="card" role="main">
+        <div style="text-align:center;margin-bottom:8px">
+            <div style="font-size:36px">🌱</div>
+            <h1>Acessar o Sistema</h1>
+            <p class="lead">Gestão completa para seu Hortifruti</p>
+        </div>
+
+        <form th:action="@{/login}" method="post" class="login-form" novalidate>
+            <div class="messages">
+                <div th:if="${param.error}" class="message error">⚠️ Usuário ou senha inválidos</div>
+                <div th:if="${param.logout}" class="message success">✅ Logout realizado com sucesso</div>
+            </div>
+
+            <div class="input-row">
+                <label for="username">Usuário</label>
+                <input type="text" id="username" name="username" placeholder="Digite seu usuário" required autocomplete="username">
+            </div>
+
+            <div class="input-row">
+                <label for="password">Senha</label>
+                <input type="password" id="password" name="password" placeholder="Digite sua senha" required autocomplete="current-password">
+            </div>
+
+            <!-- Botão Entrar e Botão Voltar lado a lado (conforme solicitado) -->
+            <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
+                <button type="submit" class="btn btn-primary">→ Entrar no Sistema</button>
+                <!-- mantive a rota de voltar exatamente como antes (não alterei) -->
+                <a href="/" class="btn-ghost" role="button" aria-label="Voltar">🏠 Voltar</a>
+            </div>
+        </form>
+
+        <div class="divider">Gestão Completa — Controle de Estoque • Vendas • Relatórios</div>
+
+        <footer>
+            Sistema de Gestão Hortifruti Profissional — © <span th:text="${T(java.time.Year).now()}"/> HortiSystem
+        </footer>
+    </main>
+</div>
+</body>
+</html>

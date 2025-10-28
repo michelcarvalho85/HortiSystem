@@ -1,0 +1,4 @@
+2025-10-15 02:30:13.053004-03:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "USUARIOS" not found; SQL statement:
+INSERT INTO USUARIOS (username, password, email, role, ativo) 
+VALUES ('vendedor', '$2a$10$3o7Tgs5AC7OJ5u2gYt4Dvuiwsfw32iJBzwVvesxsUbwHeTQcCkZpW', 'vendedor@hortisystem.com', 'USER', true) [42102-224]

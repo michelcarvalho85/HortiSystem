@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>HortiSystem — Usuários Cadastrados</title>
+    
+
+    <!-- HortiSystem Tema Moderno (global) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/horti-modern.css">
+
+</head>
+<body>
+<div class="shell">
+    <header class="topbar"><div style="width:36px;height:36px;border-radius:8px;background:linear-gradient(135deg,#22c55e,#06b6d4);display:flex;align-items:center;justify-content:center">HS</div><div style="font-weight:800">HortiSystem</div></header>
+
+    <main class="card">
+        <h1>👥 Usuários Cadastrados</h1>
+
+        <div th:if="${errorMessage}" style="margin-bottom:12px;color:#ffadad" th:text="${errorMessage}"></div>
+
+        <div style="overflow:auto">
+            <table role="table" aria-label="Tabela de usuários">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome de Usuário</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Ativo</th>
+                    <th>Consentimento LGPD</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="u : ${usuarios}">
+                    <td th:text="${u.id}">1</td>
+                    <td th:text="${u.username}">user</td>
+                    <td th:text="${u.email}">email</td>
+                    <td th:text="${u.role}">ROLE_USER</td>
+                    <td th:text="${u.ativo == true ? 'Sim' : 'Não'}">Sim</td>
+                    <td th:text="${u.consentimentoLgpd == true ? 'Aceito' : 'Não Aceito'}">Não</td>
+                </tr>
+
+                <tr th:if="${usuarios == null || #lists.isEmpty(usuarios)}">
+                    <td colspan="6" class="empty">Nenhum usuário encontrado.</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div style="margin-top:12px">
+            <a th:href="@{/usuario/novo}" style="color:var(--muted);text-decoration:none;margin-right:12px">➕ Novo Usuário</a>
+            <a th:href="@{ / }" style="color:var(--muted);text-decoration:none">🏠 Voltar</a>
+        </div>
+    </main>
+
+    <footer>© <span th:text="${T(java.time.Year).now()}"/> HortiSystem</footer>
+</div>
+</body>
+</html>

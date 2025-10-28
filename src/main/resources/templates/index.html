@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>HortiSystem — Gestão Moderna</title>
+    <!-- Fonte moderna -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+    
+
+    <!-- HortiSystem Tema Moderno (global) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/horti-modern.css">
+
+</head>
+<body>
+<div class="shell">
+
+    <!-- Topbar (sem JS) -->
+    <header class="topbar" role="banner">
+        <a class="brand" href="/">
+            <div class="logo">HS</div>
+            <div class="title">HortiSystem</div>
+        </a>
+
+        <!-- links principais (rotas originais mantidas) -->
+        <nav class="nav" role="navigation" aria-label="Acesso rápido">
+            <a href="/produto/novo">Cadastrar</a>
+            <a href="/produto/lista">Produtos</a>
+            <!-- Alterado: Vendas -> Caixa (rota apontando para localhost:8080/caixa) -->
+            <a href="http://localhost:8080/caixa">Caixa</a>
+            <a href="/relatorios">Relatórios</a>
+            <!-- Alterado: Funcionários -> aponta para localhost:8080/funcionarios/novo -->
+            <a href="http://localhost:8080/funcionarios/novo">Funcionários</a>
+            <!-- Alterado: Usuários -> aponta para localhost:8080/usuario/novo -->
+            <a href="http://localhost:8080/usuario/novo">Usuários</a>
+        </nav>
+
+        <!-- Área do usuário (botão sem funcionalidade) -->
+        <div class="user-area" aria-hidden="false">
+            <!-- Botão de usuário: sem comportamento — apenas visual -->
+            <div class="user-btn" role="button" aria-label="Usuário">
+                <div style="width:34px;height:34px;border-radius:8px;background:linear-gradient(135deg,var(--accent-1),var(--accent-2));display:flex;align-items:center;justify-content:center;font-weight:700">A</div>
+                <div style="display:flex;flex-direction:column;min-width:120px">
+                    <div style="font-weight:700;font-size:13px">Administrador</div>
+                    <div class="muted" style="font-size:12px">admin@horti.local</div>
+                </div>
+            </div>
+
+            <!-- Botão Sair: sem funcionalidade implementada -->
+            <a class="logout-btn" href="#" role="button" aria-label="Sair">🔒 Sair</a>
+        </div>
+    </header>
+
+    <!-- Hero + painel lateral -->
+    <main class="hero-card hero" role="main">
+
+        <div>
+            <div class="eyebrow">Sistema para Hortifrúti</div>
+            <h1>Gestão simples — visual moderno</h1>
+            <p class="lead">Organize estoque, preços e categorias com painéis limpos, rápidos e fáceis de navegar — sem JavaScript.</p>
+
+            <div class="cta-row" style="margin-top:18px">
+                <a class="btn btn-primary" href="/produto/novo">➕ Cadastrar Produto</a>
+                <a class="btn btn-ghost" href="/produto/lista">📋 Ver Lista</a>
+            </div>
+
+            <!-- Painel administrativo rápido (atalhos para áreas principais) -->
+            <div class="admin-grid" aria-label="Atalhos administrativos">
+                <a class="admin-card" href="/produto/lista">
+                    <div class="icon">📦</div>
+                    <div>
+                        <div class="label">Produtos</div>
+                        <div class="sub">Gerenciar catálogo e estoque</div>
+                    </div>
+                </a>
+
+                <a class="admin-card" href="/funcionarios">
+                    <div class="icon">👥</div>
+                    <div>
+                        <div class="label">Funcionários</div>
+                        <div class="sub">Cadastrar e gerenciar equipes</div>
+                    </div>
+                </a>
+
+                <a class="admin-card" href="/usuario/lista">
+                    <div class="icon">🔐</div>
+                    <div>
+                        <div class="label">Usuários</div>
+                        <div class="sub">Controle de acesso e permissões</div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Recursos em destaque -->
+            <section style="margin-top:20px">
+                <div class="features">
+                    <div class="feature">
+                        <div class="icon">📦</div>
+                        <h5>Controle de Estoque</h5>
+                        <div class="muted">Níveis, validade e movimentações.</div>
+                    </div>
+
+                    <div class="feature">
+                        <div class="icon">💰</div>
+                        <h5>Gestão de Preços</h5>
+                        <div class="muted">Preço por unidade, promoções e histórico.</div>
+                    </div>
+
+                    <div class="feature">
+                        <div class="icon">📊</div>
+                        <h5>Categorização</h5>
+                        <div class="muted">Filtrar e agrupar por categoria e fornecedor.</div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Painel lateral com resumo rápido -->
+        <aside class="summary" aria-labelledby="summary-title">
+            <h4 id="summary-title">Resumo Rápido</h4>
+            <div class="stat">
+                <div>
+                    <div class="muted">Produtos</div>
+                    <div class="num">1.254</div>
+                </div>
+                <div class="muted">Ativos</div>
+            </div>
+            <div class="stat">
+                <div>
+                    <div class="muted">Baixo estoque</div>
+                    <div class="num">23</div>
+                </div>
+                <div class="muted">Atenção</div>
+            </div>
+            <div class="stat">
+                <div>
+                    <div class="muted">Último backup</div>
+                    <div class="num">2025-10-20</div>
+                </div>
+                <div class="muted">OK</div>
+            </div>
+
+            <div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap">
+                <a class="btn btn-ghost" href="/estoque/alertas">⚠️ Alertas</a>
+                <a class="btn btn-ghost" href="/fornecedores">🚚 Fornecedores</a>
+            </div>
+
+        </aside>
+
+    </main>
+
+    <footer>
+        © <span id="year">2025</span> HortiSystem — Interface moderna e acessível • Desenvolvido para hortifrúti
+    </footer>
+
+</div>
+</body>
+</html>

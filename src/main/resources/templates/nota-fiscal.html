@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nota Fiscal - HortiSystem</title>
+    
+
+    <!-- HortiSystem Tema Moderno (global) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/horti-modern.css">
+
+</head>
+<body>
+<div class="nota-fiscal" id="notaFiscal">
+    <div class="header">
+        <h1>HORTISYSTEM SUPERMERCADO</h1>
+        <p>CNPJ: 12.345.678/0001-90</p>
+        <p>Rua das Hortaliças, 123 - Centro</p>
+    </div>
+
+    <div class="linha">
+        <strong>NOTA FISCAL</strong><br>
+        Nº: <span th:text="${venda.numeroNotaFiscal}"></span><br>
+        Data: <span th:text="${#temporals.format(venda.dataVenda, 'dd/MM/yyyy HH:mm')}"></span>
+    </div>
+
+    <div class="linha">
+        <strong>CLIENTE:</strong><br>
+        <span th:text="${venda.nomeCliente}"></span><br>
+        <span th:text="${venda.cpfCliente} ?: 'CPF não informado'"></span>
+    </div>
+
+    <div class="linha">
+        <strong>ITENS:</strong>
+        <div th:each="item : ${venda.itens}" class="item">
+            <span th:text="${item.produto.nome}"></span>
+            <span th:text="${item.quantidade} + ' x R$ ' + ${#numbers.formatDecimal(item.valorUnitario, 1, 2, 'POINT')}"></span>
+        </div>
+    </div>
+
+    <div class="linha-dupla">
+        <div class="item">
+            <span>TOTAL DE ITENS:</span>
+            <span th:text="${venda.quantidadeTotalItens}"></span>
+        </div>
+        <div class="item">
+            <span>FORMA PAGAMENTO:</span>
+            <span th:text="${venda.formaPagamento}"></span>
+        </div>
+        <div class="item" th:if="${venda.formaPagamento == 'DINHEIRO'}">
+            <span>VALOR RECEBIDO:</span>
+            <span th:text="'R$ ' + ${#numbers.formatDecimal(venda.valorRecebido, 1, 2, 'POINT')}"></span>
+        </div>
+        <div class="item" th:if="${venda.formaPagamento == 'DINHEIRO'}">
+            <span>TROCO:</span>
+            <span th:text="'R$ ' + ${#numbers.formatDecimal(venda.troco, 1, 2, 'POINT')}"></span>
+        </div>
+    </div>
+
+    <div class="total">
+        TOTAL: R$ <span th:text="${#numbers.formatDecimal(venda.valorTotal, 1, 2, 'POINT')}"></span>
+    </div>
+
+    <div class="rodape">
+        <p>*** OBRIGADO PELA PREFERÊNCIA ***</p>
+        <p>Volte Sempre!</p>
+        <p>HORTISYSTEM - QUALIDADE EM HORTIFRUTI</p>
+    </div>
+</div>
+
+<button class="btn-print" onclick="window.print()">🖨️ IMPRIMIR NOTA FISCAL</button>
+<a href="/caixa" style="display: block; text-align: center; margin-top: 10px;">🔄 NOVA VENDA</a>
+
+<script>
+    // Imprime automaticamente (opcional)
+    // window.onload = function() { window.print(); };
+
+    console.log('📄 Nota fiscal gerada com sucesso!');
+</script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>HortiSystem — Caixa</title>
+    
+
+    <!-- HortiSystem Tema Moderno (global) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/horti-modern.css">
+
+</head>
+<body>
+<div class="shell">
+    <header class="topbar">
+        <div class="brand"><div class="logo">HS</div><div style="font-weight:800">HortiSystem — Caixa</div></div>
+        <nav style="display:flex;gap:8px"><a href="/" style="color:var(--muted);text-decoration:none">🏠 Início</a><a href="/vendas" style="color:var(--muted);text-decoration:none">💰 Vendas</a></nav>
+    </header>
+
+    <div class="layout">
+        <section class="card">
+            <div class="scanner">
+                <h3>📦 Leitor / Código</h3>
+                <p style="color:var(--muted)">Digite o código do produto e a quantidade</p>
+
+                <form th:action="@{/caixa/adicionar}" method="post" style="margin-top:12px">
+                    <div style="margin-bottom:10px">
+                        <label for="codigoProduto">Código do Produto</label>
+                        <input type="text" id="codigoProduto" name="codigoProduto" required placeholder="Ex: 1, 2, 3..." autofocus>
+                    </div>
+                    <div style="margin-bottom:10px">
+                        <label for="quantidade">Quantidade</label>
+                        <input type="number" id="quantidade" name="quantidade" value="1" min="1" required>
+                    </div>
+                    <button class="btn btn-primary" type="submit">➕ ADICIONAR</button>
+                </form>
+
+                <div class="produtos-ref">
+                    <h4 style="margin:0 0 8px">📋 Produtos Cadastrados</h4>
+                    <div th:each="produto : ${produtos}" class="prod-item">
+                        <div><strong th:text="'Cód: ' + ${produto.id}"></strong> - <span th:text="${produto.nome}"></span></div>
+                        <div th:text="${#numbers.formatDecimal(produto.valor, 1, 2, 'POINT')}">0.00</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <aside class="card display">
+            <h3>🖥️ Display do Caixa</h3>
+            <div class="display-line"><strong>HORTISYSTEM SUPERMERCADO</strong></div>
+            <div class="display-line">Data: <span th:text="${#temporals.format(#temporals.createNow(), 'dd/MM/yyyy HH:mm')}"></span></div>
+
+            <div class="display-line" th:if="${novoItem}">
+                <strong>ÚLTIMO ITEM:</strong>
+                <div th:text="${novoItem.produto.nome}"></div>
+                <div th:text="'Qtd: ' + ${novoItem.quantidade} + ' x R$ ' + ${#numbers.formatDecimal(novoItem.valorUnitario, 1, 2, 'POINT')}"></div>
+                <div th:text="'Subtotal: R$ ' + ${#numbers.formatDecimal(novoItem.subtotal, 1, 2, 'POINT')}"></div>
+            </div>
+
+            <div class="total">TOTAL: R$ <span th:text="${#numbers.formatDecimal(venda.valorTotal, 1, 2, 'POINT')}">0.00</span></div>
+
+            <div style="margin-top:12px">
+                <form th:action="@{/caixa/finalizar}" method="post" th:object="${venda}">
+                    <label for="nomeCliente">Nome do Cliente (Opcional)</label>
+                    <input type="text" id="nomeCliente" th:field="*{nomeCliente}" placeholder="Consumidor" style="margin-bottom:8px">
+
+                    <label for="valorRecebido">Valor Recebido (R$)</label>
+                    <input type="number" id="valorRecebido" th:field="*{valorRecebido}" step="0.01" min="0" placeholder="0.00" style="margin-bottom:8px">
+
+                    <div style="display:flex;gap:8px;flex-wrap:wrap">
+                        <input type="hidden" id="formaPagamento" th:field="*{formaPagamento}">
+                        <button type="submit" class="btn btn-primary">✅ Finalizar Venda</button>
+                        <a href="#" class="btn" style="background:transparent;color:var(--muted);border-radius:10px;padding:10px 12px">❌ Cancelar</a>
+                    </div>
+                </form>
+            </div>
+
+        </aside>
+    </div>
+
+    <footer style="margin-top:14px;text-align:center;color:var(--muted)">© <span th:text="${T(java.time.Year).now()}"/> HortiSystem</footer>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function(){ var codigo = document.getElementById('codigoProduto'); if(codigo) codigo.focus(); });
+</script>
+</body>
+</html>

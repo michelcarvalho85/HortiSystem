@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDV - Sistema de Vendas</title>
+    
+
+    <!-- HortiSystem Tema Moderno (global) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/horti-modern.css">
+
+</head>
+<body>
+<!-- CONTAINER PRINCIPAL -->
+<div class="container">
+
+    <!-- CABEÇALHO -->
+    <div class="header">
+        <h1>🛒 Ponto de Venda - HortiSystem</h1>
+    </div>
+
+    <!-- MENSAGENS DO SISTEMA -->
+    <div class="messages" th:if="${success} or ${error}">
+        <div th:if="${success}" class="message success">
+            <span>✅</span>
+            <span th:text="${success}"></span>
+        </div>
+        <div th:if="${error}" class="message error">
+            <span>⚠️</span>
+            <span th:text="${error}"></span>
+        </div>
+    </div>
+
+    <!-- COLUNA DA ESQUERDA - PRODUTOS -->
+    <div class="produtos-section">
+        <h2 class="section-title">📦 Produtos Disponíveis</h2>
+
+        <!-- LISTA DE PRODUTOS -->
+        <div class="produtos-grid" id="produtosGrid">
+            <div th:each="produto : ${produtos}"
+                 class="produto-card"
+                 th:onclick="|selecionarProduto(this, ${produto.id})|"
+                 th:data-id="${produto.id}">
+                <div class="produto-nome" th:text="${produto.nome}"></div>
+                <div class="produto-info">
+                    <span class="produto-valor" th:text="'R$ ' + ${#numbers.formatDecimal(produto.valor, 1, 2, 'POINT')}"></span>
+                    <span class="produto-estoque" th:text="'Estoque: ' + ${produto.quantidade}"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- CONTROLES DE QUANTIDADE -->
+        <div class="quantidade-form">
+            <div class="form-group">
+                <label>Quantidade:</label>
+                <div class="quantidade-controls">
+                    <button type="button" class="quantidade-btn" onclick="alterarQuantidade(-1)">-</button>
+                    <input type="number" id="quantidade" class="quantidade-input" value="1" min="1">
+                    <button type="button" class="quantidade-btn" onclick="alterarQuantidade(1)">+</button>
+                </div>
+            </div>
+
+            <button type="button" id="addBtn" class="add-btn" onclick="adicionarItem()" disabled>
+                ➕ Adicionar à Venda
+            </button>
+        </div>
+    </div>
+
+    <!-- COLUNA DA DIREITA - RESUMO DA VENDA -->
+    <div class="resumo-section">
+        <h2 class="section-title">🧾 Resumo da Venda</h2>
+
+        <!-- INFORMAÇÕES DO CLIENTE -->
+        <div class="cliente-section">
+            <input type="text"
+                   id="nomeCliente"
+                   class="cliente-input"
+                   placeholder="Nome do cliente (opcional)">
+        </div>
+
+        <!-- LISTA DE ITENS DA VENDA -->
+        <div class="itens-lista" id="itensLista">
+            <div class="vazia" id="listaVazia">
+                Nenhum item adicionado
+            </div>
+        </div>
+
+        <!-- TOTAL -->
+        <div class="total-section">
+            <div class="total-line">
+                <span class="total-label">Total:</span>
+                <span class="total-valor" id="totalVenda">R$ 0,00</span>
+            </div>
+        </div>
+
+        <!-- FORMA DE PAGAMENTO -->
+        <div class="pagamento-group">
+            <label>Forma de Pagamento:</label>
+            <div class="pagamento-options">
+                <div class="pagamento-option" onclick="selecionarPagamento('DINHEIRO')">
+                    💵 Dinheiro
+                </div>
+                <div class="pagamento-option" onclick="selecionarPagamento('CARTAO_CREDITO')">
+                    💳 Crédito
+                </div>
+                <div class="pagamento-option" onclick="selecionarPagamento('CARTAO_DEBITO')">
+                    🏦 Débito
+                </div>
+                <div class="pagamento-option" onclick="selecionarPagamento('PIX')">
+                    📱 PIX
+                </div>
+            </div>
+        </div>
+
+        <!-- BOTÕES DE AÇÃO -->
+        <div class="action-buttons">
+            <button type="button" class="btn btn-secondary" onclick="limparVenda()">
+                🗑️ Limpar
+            </button>
+            <button type="button" class="btn btn-primary" onclick="finalizarVenda()">
+                ✅ Finalizar Venda
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- FORMULÁRIO HIDDEN PARA SUBMETER A VENDA -->
+<form id="vendaForm" th:action="@{/vendas/processar}" method="post" th:object="${venda}">
+    <input type="hidden" name="nomeCliente" id="hiddenCliente">
+    <input type="hidden" name="formaPagamento" id="hiddenPagamento">
+    <!-- Os itens serão adicionados via JavaScript -->
+</form>
+
+<script>
+    // ===== VARIÁVEIS GLOBAIS =====
+    let produtoSelecionado = null;
+    let itensVenda = [];
+    let formaPagamento = null;
+
+    // ===== SELEÇÃO DE PRODUTO =====
+    function selecionarProduto(elemento, produtoId) {
+        // Remove seleção anterior
+        document.querySelectorAll('.produto-card').forEach(card => {
+            card.classList.remove('selecionado');
+        });
+
+        // Adiciona seleção atual
+        elemento.classList.add('selecionado');
+        produtoSelecionado = produtoId;
+
+        // Habilita botão de adicionar
+        document.getElementById('addBtn').disabled = false;
+    }
+
+    // ===== CONTROLE DE QUANTIDADE =====
+    function alterarQuantidade(valor) {
+        const input = document.getElementById('quantidade');
+        let novaQuantidade = parseInt(input.value) + valor;
+
+        if (novaQuantidade < 1) novaQuantidade = 1;
+
+        input.value = novaQuantidade;
+    }
+
+    // ===== ADICIONAR ITEM À VENDA =====
+    function adicionarItem() {
+        if (!produtoSelecionado) {
+            alert('Selecione um produto primeiro!');
+            return;
+        }
+
+        const quantidade = parseInt(document.getElementById('quantidade').value);
+
+        // Encontrar produto na lista
+        const produtoCard = document.querySelector(`.produto-card[data-id="${produtoSelecionado}"]`);
+        const produtoNome = produtoCard.querySelector('.produto-nome').textContent;
+        const produtoValor = produtoCard.querySelector('.produto-valor').textContent.replace('R$ ', '').replace(',', '.');
+
+        // Verificar se item já existe
+        const itemExistente = itensVenda.find(item => item.produtoId === produtoSelecionado);
+
+        if (itemExistente) {
+            itemExistente.quantidade += quantidade;
+        } else {
+            itensVenda.push({
+                produtoId: produtoSelecionado,
+                produtoNome: produtoNome,
+                quantidade: quantidade,
+                valorUnitario: parseFloat(produtoValor),
+                subtotal: parseFloat(produtoValor) * quantidade
+            });
+        }
+
+        atualizarResumo();
+        resetarSelecao();
+    }
+
+    // ===== ATUALIZAR RESUMO DA VENDA =====
+    function atualizarResumo() {
+        const lista = document.getElementById('itensLista');
+        const listaVazia = document.getElementById('listaVazia');
+        const totalElement = document.getElementById('totalVenda');
+
+        if (itensVenda.length === 0) {
+            listaVazia.style.display = 'block';
+            lista.innerHTML = '<div class="vazia" id="listaVazia">Nenhum item adicionado</div>';
+            totalElement.textContent = 'R$ 0,00';
+            return;
+        }
+
+        listaVazia.style.display = 'none';
+
+        let html = '';
+        let total = 0;
+
+        itensVenda.forEach((item, index) => {
+            const subtotal = item.quantidade * item.valorUnitario;
+            total += subtotal;
+
+            html += `
+                <div class="item-venda">
+                    <div class="item-info">
+                        <div class="item-nome">${item.produtoNome}</div>
+                        <div class="item-detalhes">
+                            ${item.quantidade} x R$ ${item.valorUnitario.toFixed(2)}
+                        </div>
+                    </div>
+                    <div class="item-valor">R$ ${subtotal.toFixed(2)}</div>
+                    <button type="button" class="remover-item" onclick="removerItem(${index})">❌</button>
+                </div>
+            `;
+        });
+
+        lista.innerHTML = html;
+        totalElement.textContent = `R$ ${total.toFixed(2)}`;
+    }
+
+    // ===== REMOVER ITEM =====
+    function removerItem(index) {
+        itensVenda.splice(index, 1);
+        atualizarResumo();
+    }
+
+    // ===== SELEÇÃO DE PAGAMENTO =====
+    function selecionarPagamento(tipo) {
+        formaPagamento = tipo;
+
+        document.querySelectorAll('.pagamento-option').forEach(option => {
+            option.classList.remove('selecionado');
+        });
+
+        event.target.classList.add('selecionado');
+    }
+
+    // ===== FINALIZAR VENDA =====
+    function finalizarVenda() {
+        if (itensVenda.length === 0) {
+            alert('Adicione itens à venda antes de finalizar!');
+            return;
+        }
+
+        if (!formaPagamento) {
+            alert('Selecione uma forma de pagamento!');
+            return;
+        }
+
+        // Preparar dados do formulário
+        document.getElementById('hiddenCliente').value = document.getElementById('nomeCliente').value;
+        document.getElementById('hiddenPagamento').value = formaPagamento;
+
+        // Adicionar campos hidden para cada item
+        const form = document.getElementById('vendaForm');
+
+        // Limpar itens anteriores
+        document.querySelectorAll('[name^="itens"]').forEach(element => element.remove());
+
+        // Adicionar novos itens
+        itensVenda.forEach((item, index) => {
+            const produtoInput = document.createElement('input');
+            produtoInput.type = 'hidden';
+            produtoInput.name = `itens[${index}].produto.id`;
+            produtoInput.value = item.produtoId;
+            form.appendChild(produtoInput);
+
+            const quantidadeInput = document.createElement('input');
+            quantidadeInput.type = 'hidden';
+            quantidadeInput.name = `itens[${index}].quantidade`;
+            quantidadeInput.value = item.quantidade;
+            form.appendChild(quantidadeInput);
+        });
+
+        // Submeter formulário
+        form.submit();
+    }
+
+    // ===== LIMPAR VENDA =====
+    function limparVenda() {
+        if (confirm('Tem certeza que deseja limpar toda a venda?')) {
+            itensVenda = [];
+            formaPagamento = null;
+            document.getElementById('nomeCliente').value = '';
+            document.querySelectorAll('.pagamento-option').forEach(option => {
+                option.classList.remove('selecionado');
+            });
+            resetarSelecao();
+            atualizarResumo();
+        }
+    }
+
+    // ===== RESETAR SELEÇÃO =====
+    function resetarSelecao() {
+        produtoSelecionado = null;
+        document.getElementById('quantidade').value = 1;
+        document.querySelectorAll('.produto-card').forEach(card => {
+            card.classList.remove('selecionado');
+        });
+        document.getElementById('addBtn').disabled = true;
+    }
+
+    // ===== INICIALIZAÇÃO =====
+    document.addEventListener('DOMContentLoaded', function() {
+        atualizarResumo();
+    });
+</script>
+</body>
+</html>
