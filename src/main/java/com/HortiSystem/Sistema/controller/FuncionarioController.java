@@ -84,6 +84,8 @@ public class FuncionarioController {
 
     /**
      * DEMITIR FUNCIONÁRIO - POST /funcionarios/demitir/{id} - ✅ COM REDIRECIONAMENTO
+     * Demite um funcionário do sistema (soft delete).
+     * Ao invés de remover do banco, marca como inativo para manter histórico.
      */
     @PostMapping("/demitir/{id}")
     public String demitirFuncionario(@PathVariable Long id, RedirectAttributes redirectAttributes) {
