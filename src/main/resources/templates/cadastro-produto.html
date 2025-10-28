@@ -4,12 +4,29 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>HortiSystem — Cadastrar Produto</title>
-    
-
-    <!-- HortiSystem Tema Moderno (global) -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/horti-modern.css">
-
+    <style>
+        :root{--bg:#0f1724;--card:#0b1220;--muted:#98a0ad;--accent-1:#22c55e;--accent-2:#06b6d4;--radius:12px}
+        *{box-sizing:border-box}
+        body{margin:0;font-family:Inter,system-ui,Arial;background:var(--bg);color:#e6eef6;min-height:100vh;padding:28px}
+        .shell{max-width:680px;margin:0 auto}
+        .topbar{display:flex;align-items:center;gap:12px;padding:12px;border-radius:12px;margin-bottom:18px;background:linear-gradient(90deg,rgba(255,255,255,0.02),transparent);border:1px solid rgba(255,255,255,0.03)}
+        .logo{width:40px;height:40px;border-radius:8px;background:linear-gradient(135deg,var(--accent-1),var(--accent-2));display:flex;align-items:center;justify-content:center;font-weight:800}
+        .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:22px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)}
+        h1{margin:0 0 12px}
+        label{display:block;color:var(--muted);font-size:13px;margin-bottom:6px}
+        input,select{width:100%;padding:12px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit}
+        .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+        .actions{display:flex;gap:8px;margin-top:12px}
+        .btn{padding:10px 12px;border-radius:10px;border:0;font-weight:700;cursor:pointer}
+        .btn-primary{background:linear-gradient(90deg,var(--accent-1),var(--accent-2));color:#022}
+        .btn-secondary{background:transparent;color:var(--muted);border:1px solid rgba(255,255,255,0.03)}
+        .messages{margin-bottom:12px}
+        .alert{padding:10px;border-radius:10px}
+        .alert-success{background:rgba(34,197,94,0.06);color:#b7f3d0}
+        .alert-error{background:rgba(220,38,38,0.06);color:#ffadad}
+        footer{margin-top:14px;color:var(--muted);font-size:13px;text-align:center}
+        @media(max-width:680px){.row{grid-template-columns:1fr}}
+    </style>
 </head>
 <body>
 <div class="shell">

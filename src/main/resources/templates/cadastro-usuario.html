@@ -4,12 +4,79 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>HortiSystem — Cadastrar Usuário</title>
-    
-
-    <!-- HortiSystem Tema Moderno (global) -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/horti-modern.css">
-
+    <style>
+        :root{
+          --bg:#0f1724;
+          --muted:#98a0ad;
+          --accent-1:#22c55e;
+          --accent-2:#06b6d4;
+          --radius:12px;
+        }
+        *{box-sizing:border-box}
+        body{
+          margin:0;
+          font-family:Inter,system-ui,Arial;
+          background:var(--bg);
+          color:#e6eef6;
+          min-height:100vh;
+          padding:28px;
+          -webkit-font-smoothing:antialiased;
+        }
+        .shell{max-width:640px;margin:0 auto}
+        .topbar{
+          display:flex;align-items:center;gap:12px;padding:12px;border-radius:12px;margin-bottom:18px;
+          background:linear-gradient(90deg,rgba(255,255,255,0.02),transparent);
+          border:1px solid rgba(255,255,255,0.03);
+        }
+        .logo{
+          width:40px;height:40px;border-radius:8px;
+          background:linear-gradient(135deg,var(--accent-1),var(--accent-2));
+          display:flex;align-items:center;justify-content:center;font-weight:700;
+        }
+        .card{
+          background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+          padding:22px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);
+        }
+        h1{margin:0 0 12px;font-size:20px}
+        label{display:block;color:var(--muted);font-size:13px;margin-bottom:6px}
+        input[type="text"], input[type="email"], input[type="password"]{
+          width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);
+          background:transparent;color:inherit;font-size:14px;
+        }
+        .form-row{display:grid;gap:12px}
+        .actions{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+        .btn{padding:10px 12px;border-radius:10px;border:0;font-weight:700;cursor:pointer}
+        .btn-primary{background:linear-gradient(90deg,var(--accent-1),var(--accent-2));color:#022}
+        .btn-ghost{background:transparent;color:var(--muted);border-radius:10px;padding:10px 12px;text-decoration:none;display:inline-flex;align-items:center;justify-content:center}
+        .note{font-size:13px;color:var(--muted);margin-top:8px}
+        /* Checkbox improved layout */
+        .checkbox-row{
+          display:flex;
+          align-items:center;
+          gap:12px;
+          padding:10px;
+          border-radius:8px;
+          border:1px solid rgba(255,255,255,0.03);
+          background:rgba(255,255,255,0.01);
+          margin-bottom:6px;
+        }
+        .checkbox-row input[type="checkbox"]{
+          width:18px;height:18px;
+          accent-color: #22c55e; /* modern checkbox color */
+          flex:0 0 auto;
+          cursor:pointer;
+        }
+        .checkbox-row label{
+          margin:0;
+          font-size:14px;
+          color:var(--muted);
+          cursor:pointer;
+        }
+        .helper-link{color:var(--muted);font-size:13px;text-decoration:none}
+        .helper-link:hover{text-decoration:underline;color:#fff}
+        footer{margin-top:14px;color:var(--muted);text-align:center;font-size:13px}
+        @media(max-width:520px){ .actions{flex-direction:column;align-items:stretch} }
+    </style>
 </head>
 <body>
 <div class="shell">
