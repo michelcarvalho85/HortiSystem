@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>HortiSystem — Cadastrar Produto</title>
+    <style>
+        :root {
+          --accent: #16a34a;
+          --danger: #dc2626;
+          --warning: #f59e0b;
+          --success: #16a34a;
+          --text-muted: #6b7280;
+          --bg: #f3f4f6;
+        }
+
+        * {
+          box-sizing: border-box;
+          font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+        }
+
+        body {
+          margin: 0;
+          background: var(--bg);
+          display: flex;
+          justify-content: center;
+          align-items: flex-start;
+          min-height: 100vh;
+          padding: 40px 16px;
+          color: #1f2937;
+        }
+
+        .container {
+          width: 100%;
+          max-width: 600px;
+          background: white;
+          border-radius: 14px;
+          box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+          overflow: hidden;
+        }
+
+        /* Topbar */
+        .header {
+          background: #111827;
+          color: white;
+          padding: 18px 24px;
+          display: flex;
+          align-items: center;
+          gap: 10px;
+        }
+
+        .logo {
+          background: #065f46;
+          color: white;
+          font-weight: 700;
+          padding: 10px 12px;
+          border-radius: 8px;
+        }
+
+        .header span {
+          font-weight: 600;
+          font-size: 1.1rem;
+        }
+
+        main {
+          padding: 28px;
+        }
+
+        h1 {
+          font-size: 1.4rem;
+          margin-bottom: 16px;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        }
+
+        form {
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+        }
+
+        label {
+          font-weight: 600;
+          margin-bottom: 4px;
+        }
+
+        input, select {
+          width: 100%;
+          padding: 10px 12px;
+          border: 1px solid #d1d5db;
+          border-radius: 8px;
+          font-size: 0.95rem;
+          transition: border-color 0.2s;
+        }
+
+        input:focus, select:focus {
+          border-color: var(--accent);
+          outline: none;
+        }
+
+        .actions {
+          display: flex;
+          justify-content: space-between;
+          gap: 12px;
+          margin-top: 10px;
+        }
+
+        .btn {
+          display: inline-block;
+          padding: 10px 16px;
+          border: none;
+          border-radius: 8px;
+          cursor: pointer;
+          font-weight: 600;
+          font-size: 0.9rem;
+          transition: all 0.2s;
+        }
+
+        .btn-primary {
+          background: var(--accent);
+          color: #fff;
+        }
+
+        .btn-primary:hover {
+          background: #15803d;
+        }
+
+        .btn-secondary {
+          background: #e5e7eb;
+          color: #111827;
+        }
+
+        .btn-secondary:hover {
+          background: #d1d5db;
+        }
+
+        .menu {
+          margin-top: 20px;
+          border-top: 1px solid #e5e7eb;
+          padding-top: 16px;
+          text-align: center;
+        }
+
+        .menu a {
+          color: var(--text-muted);
+          text-decoration: none;
+          margin: 0 10px;
+          font-size: 0.9rem;
+        }
+
+        .menu a:hover {
+          color: #111827;
+        }
+
+        footer {
+          background: #f9fafb;
+          color: var(--text-muted);
+          font-size: 0.8rem;
+          text-align: center;
+          padding: 12px;
+          border-top: 1px solid #e5e7eb;
+        }
+
+        @media(max-width: 768px) {
+          main { padding: 20px; }
+          .btn { font-size: 0.85rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header class="header">
+        <div class="logo">HS</div>
+        <span>HortiSystem</span>
+    </header>
+
+    <main>
+        <h1>🧺 Cadastrar Produto</h1>
+
+        <!-- Mensagens de sucesso ou erro -->
+        <div th:if="${success}"
+             style="background:#dcfce7;
+            border:1px solid #bbf7d0;
+            color:#166534;
+            padding:12px 14px;
+            border-radius:8px;
+            margin-bottom:18px;
+            font-weight:600;
+            text-align:center;">
+            ✅ <span th:text="${success}"></span>
+        </div>
+
+        <div th:if="${error}"
+             style="background:#fee2e2;
+            border:1px solid #fecaca;
+            color:#dc2626;
+            padding:12px 14px;
+            border-radius:8px;
+            margin-bottom:18px;
+            font-weight:600;
+            text-align:center;">
+            ⚠️ <span th:text="${error}"></span>
+        </div>
+
+
+        <form th:action="@{/produto/salvar}" th:object="${produto}" method="post">
+            <div>
+                <label for="nome">Nome</label>
+                <input type="text" id="nome" th:field="*{nome}" required>
+            </div>
+
+            <div>
+                <label for="categoria">Categoria</label>
+                <input type="text" id="categoria" th:field="*{categoria}" required>
+            </div>
+
+            <div>
+                <label for="valor">Valor (R$)</label>
+                <input type="number" step="0.01" id="valor" th:field="*{valor}" required>
+            </div>
+
+            <div>
+                <label for="unidadeMedida">Unidade de Medida</label>
+                <select id="unidadeMedida" th:field="*{unidadeMedida}" required>
+                    <option value="">Selecione...</option>
+                    <option value="UN">Unidade</option>
+                    <option value="KG">Quilograma (kg)</option>
+                    <option value="CX">Caixa</option>
+                    <option value="L">Litro (L)</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="quantidade">Quantidade em estoque</label>
+                <input type="number" id="quantidade" th:field="*{quantidade}" required>
+            </div>
+
+            <div class="actions">
+                <button type="submit" class="btn btn-primary">💾 Salvar Produto</button>
+                <a th:href="@{/produto/lista}" class="btn btn-secondary">⬅️ Voltar</a>
+            </div>
+        </form>
+
+        <div class="menu">
+            <a th:href="@{/produto/lista}">📦 Ver Produtos</a>
+            <a th:href="@{/funcionarios/lista}">👥 Lista de Funcionários</a>
+            <a th:href="@{/vendas}">💰 Ir para Vendas</a>
+        </div>
+    </main>
+
+    <footer>
+        © <span th:text="${T(java.time.Year).now()}"/> HortiSystem
+    </footer>
+</div>
+</body>
+</html>

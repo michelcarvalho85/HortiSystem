@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Relatórios - HortiSystem</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body { font-family: Inter, Arial, sans-serif; margin: 0; background: #ffffff; }
+        .content { max-width: 1200px; margin: 20px auto; padding: 20px; }
+        h2 { font-size: 24px; margin-bottom: 8px; color: #333; }
+        p { color: #666; font-size: 14px; margin-bottom: 20px; }
+        .report-container {
+            width: 100%;
+            height: 80vh;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Reutiliza o topo do index -->
+<header th:replace="index :: header"></header>
+
+<div class="content">
+    <h2>📊 Relatórios do Sistema</h2>
+    <p>Acompanhe indicadores do negócio diretamente pelo painel integrado do Power BI.</p>
+
+    <div class="report-container">
+        <iframe title="Relatório Power BI"
+                src="https://app.powerbi.com/view?r=eyJrIjoiZWUwMmZkNzctMjAzYS00NGUwLTgzNzQtNTAyNWJjYTRlYTE0IiwidCI6ImY2NjVhZTMyLTViM2EtNGI4OC05YzUyLWVkYTBkMDFiYzU2YSJ9"
+                allowFullScreen="true">
+        </iframe>
+    </div>
+</div>
+
+</body>
+</html>

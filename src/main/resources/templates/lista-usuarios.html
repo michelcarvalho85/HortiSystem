@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>HortiSystem — Lista de Usuários</title>
+    <style>
+        :root {
+          --accent: #16a34a;
+          --danger: #dc2626;
+          --warning: #f59e0b;
+          --success: #16a34a;
+          --text-muted: #6b7280;
+          --bg: #f3f4f6;
+        }
+
+        * {
+          box-sizing: border-box;
+          font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+        }
+
+        body {
+          margin: 0;
+          background: var(--bg);
+          display: flex;
+          justify-content: center;
+          align-items: flex-start;
+          min-height: 100vh;
+          padding: 40px 16px;
+          color: #1f2937;
+        }
+
+        .container {
+          width: 100%;
+          max-width: 1100px;
+          background: white;
+          border-radius: 14px;
+          box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+          overflow: hidden;
+        }
+
+        /* Topbar */
+        .header {
+          background: #111827;
+          color: white;
+          padding: 18px 24px;
+          display: flex;
+          align-items: center;
+          gap: 10px;
+        }
+
+        .logo {
+          background: #065f46;
+          color: white;
+          font-weight: 700;
+          padding: 10px 12px;
+          border-radius: 8px;
+        }
+
+        .header span {
+          font-weight: 600;
+          font-size: 1.1rem;
+        }
+
+        /* Conteúdo principal */
+        main {
+          padding: 28px;
+        }
+
+        h1 {
+          font-size: 1.4rem;
+          margin-bottom: 16px;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        }
+
+        /* Mensagens */
+        .message {
+          padding: 10px;
+          border-radius: 8px;
+          font-weight: 600;
+          margin-bottom: 14px;
+        }
+
+        .message.error {
+          background: #fee2e2;
+          border: 1px solid #fecaca;
+          color: var(--danger);
+        }
+
+        /* Tabela */
+        .table {
+          width: 100%;
+          border-collapse: collapse;
+          background: white;
+          border-radius: 8px;
+          overflow: hidden;
+        }
+
+        th {
+          background: #111827;
+          color: white;
+          text-align: left;
+          padding: 12px 10px;
+          font-weight: 600;
+          font-size: 0.9rem;
+        }
+
+        td {
+          padding: 12px 10px;
+          border-bottom: 1px solid #e5e7eb;
+          font-size: 0.95rem;
+        }
+
+        tr:hover {
+          background: #f9fafb;
+        }
+
+        .empty {
+          text-align: center;
+          color: var(--text-muted);
+          padding: 20px;
+        }
+
+        /* Menu inferior */
+        .menu {
+          margin-top: 20px;
+          border-top: 1px solid #e5e7eb;
+          padding-top: 16px;
+          text-align: center;
+        }
+
+        .menu a {
+          color: var(--text-muted);
+          text-decoration: none;
+          margin: 0 10px;
+          font-size: 0.9rem;
+        }
+
+        .menu a:hover {
+          color: #111827;
+        }
+
+        footer {
+          background: #f9fafb;
+          color: var(--text-muted);
+          font-size: 0.8rem;
+          text-align: center;
+          padding: 12px;
+          border-top: 1px solid #e5e7eb;
+        }
+
+        @media(max-width: 768px) {
+          main { padding: 20px; }
+          th, td { font-size: 0.85rem; padding: 8px; }
+          .menu { font-size: 0.8rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header class="header">
+        <div class="logo">HS</div>
+        <span>HortiSystem</span>
+    </header>
+
+    <main>
+        <h1>👥 Lista de Usuários</h1>
+
+        <div th:if="${errorMessage}" class="message error" th:text="${errorMessage}"></div>
+
+        <div style="overflow-x:auto">
+            <table class="table" role="table" aria-label="Tabela de usuários">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome de Usuário</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Ativo</th>
+                    <th>Consentimento LGPD</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${usuarios == null || #lists.isEmpty(usuarios)}">
+                    <td colspan="6" class="empty">📭 Nenhum usuário cadastrado</td>
+                </tr>
+
+                <tr th:each="u : ${usuarios}">
+                    <td th:text="${u.id}">1</td>
+                    <td th:text="${u.username}">user</td>
+                    <td th:text="${u.email}">email</td>
+                    <td th:text="${u.role}">ROLE_USER</td>
+                    <td>
+                        <span th:if="${u.ativo}" style="color:#16a34a;font-weight:600">✅ Sim</span>
+                        <span th:unless="${u.ativo}" style="color:#dc2626;font-weight:600">⛔ Não</span>
+                    </td>
+                    <td>
+                        <span th:if="${u.consentimentoLgpd}" style="color:#16a34a;font-weight:600">✔️ Aceito</span>
+                        <span th:unless="${u.consentimentoLgpd}" style="color:#dc2626;font-weight:600">❌ Não Aceito</span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="menu">
+            <a th:href="@{/usuario/novo}">➕ Cadastrar Novo Usuário</a>
+            <a th:href="@{/funcionarios/lista}">📋 Ver Funcionários</a>
+            <a th:href="@{/}">🏠 Voltar ao Início</a>
+        </div>
+    </main>
+
+    <footer>
+        © <span th:text="${T(java.time.Year).now()}"/> HortiSystem
+    </footer>
+</div>
+</body>
+</html>

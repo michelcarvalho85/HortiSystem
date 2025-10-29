@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>HortiSystem — Acessar Sistema</title>
+    <style>
+        :root {
+          --accent: #16a34a;
+          --danger: #dc2626;
+          --text-muted: #6b7280;
+        }
+
+        * {
+          box-sizing: border-box;
+          font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+        }
+
+        body {
+          margin: 0;
+          background-color: #f3f4f6;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          min-height: 100vh;
+          color: #1f2937;
+        }
+
+        .login-card {
+          background: white;
+          width: 100%;
+          max-width: 400px;
+          border-radius: 14px;
+          box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+          overflow: hidden;
+          text-align: center;
+        }
+
+        .header {
+          background: #111827;
+          padding: 20px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 8px;
+        }
+
+        .logo {
+          background: #065f46;
+          color: white;
+          font-weight: 700;
+          padding: 10px 12px;
+          border-radius: 8px;
+        }
+
+        .header span {
+          color: white;
+          font-weight: 600;
+          font-size: 1.1rem;
+        }
+
+        .content {
+          padding: 32px 28px;
+        }
+
+        .content h1 {
+          font-size: 1.4rem;
+          margin: 10px 0 6px;
+        }
+
+        .content p {
+          color: var(--text-muted);
+          font-size: 0.95rem;
+          margin-bottom: 20px;
+        }
+
+        .error-message {
+          background: #fee2e2;
+          color: var(--danger);
+          border: 1px solid #fecaca;
+          padding: 10px;
+          border-radius: 8px;
+          font-weight: 600;
+          margin-bottom: 18px;
+          display: none;
+        }
+
+        .success-message {
+          background: #dcfce7;
+          color: #166534;
+          border: 1px solid #bbf7d0;
+          padding: 10px;
+          border-radius: 8px;
+          font-weight: 600;
+          margin-bottom: 18px;
+          display: none;
+        }
+
+        [th\\:if='${param.error}'] { display: block !important; }
+        [th\\:if='${param.logout}'] { display: block !important; }
+
+        input {
+          width: 100%;
+          padding: 12px;
+          border-radius: 8px;
+          border: 1px solid #d1d5db;
+          margin-bottom: 14px;
+          font-size: 1rem;
+        }
+
+        input:focus {
+          outline: none;
+          border-color: var(--accent);
+          box-shadow: 0 0 0 2px rgba(34,197,94,0.2);
+        }
+
+        button {
+          width: 100%;
+          padding: 12px;
+          border: none;
+          background: #111827;
+          color: white;
+          font-weight: 600;
+          border-radius: 8px;
+          cursor: pointer;
+          font-size: 1rem;
+          transition: background 0.2s;
+        }
+
+        button:hover {
+          background: #1f2937;
+        }
+
+        .divider {
+          font-size: 0.85rem;
+          color: var(--text-muted);
+          margin-top: 24px;
+        }
+
+        footer {
+          background: #f9fafb;
+          padding: 14px;
+          font-size: 0.8rem;
+          color: var(--text-muted);
+          border-top: 1px solid #e5e7eb;
+        }
+    </style>
+</head>
+<body>
+<div class="login-card">
+    <div class="header">
+        <div class="logo">HS</div>
+        <span>HortiSystem</span>
+    </div>
+
+    <div class="content">
+        <div style="font-size: 2rem;">🌱</div>
+        <h1>Acessar o Sistema</h1>
+        <p>Gestão completa para seu Hortifruti</p>
+
+        <div th:if="${param.error}" class="error-message">⚠️ Usuário ou senha inválidos</div>
+        <div th:if="${param.logout}" class="success-message">✅ Logout realizado com sucesso</div>
+
+        <form th:action="@{/login}" method="post">
+            <input type="text" name="username" placeholder="Usuário" required autocomplete="username">
+            <input type="password" name="password" placeholder="Senha" required autocomplete="current-password">
+            <button type="submit">→ Entrar no Sistema</button>
+        </form>
+
+        <div class="divider">
+            Gestão Completa — Controle de Estoque • Vendas • Relatórios
+        </div>
+    </div>
+
+    <footer>
+        Sistema de Gestão Hortifruti Profissional — © <span th:text="${T(java.time.Year).now()}"/> HortiSystem
+    </footer>
+</div>
+</body>
+</html>
