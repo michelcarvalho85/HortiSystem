@@ -24,6 +24,11 @@ public class Usuario implements UserDetails {
     @Column(unique = true, nullable = false)
     private String username;
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 2792662d5b50809780d28e9605544be4100c1603
     @Column(nullable = false)
     private String password; // senha criptografada
 

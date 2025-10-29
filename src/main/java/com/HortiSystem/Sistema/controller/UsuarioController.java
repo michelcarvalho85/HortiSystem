@@ -84,7 +84,11 @@ public class UsuarioController {
         return "redirect:/";
     }
 
+<<<<<<< HEAD
     @PostMapping("/novo")
+=======
+    @PostMapping
+>>>>>>> 2792662d5b50809780d28e9605544be4100c1603
     public String cadastrarUsuario(@Valid @ModelAttribute("usuario") Usuario usuario,
                                    BindingResult bindingResult,
                                    Model model) {
@@ -119,9 +123,15 @@ public class UsuarioController {
         // salva (UsuarioService já faz bcrypt)
         usuarioService.salvar(usuario);
 
+<<<<<<< HEAD
         // mensagem de sucesso
         model.addAttribute("successMessage", "✅ Usuário cadastrado com sucesso!");
         model.addAttribute("usuario", new Usuario()); // limpa o form
+=======
+        model.addAttribute("success", true);
+        // limpa o formulário mostrando novo objeto
+        model.addAttribute("usuario", new Usuario());
+>>>>>>> 2792662d5b50809780d28e9605544be4100c1603
         return "cadastro-usuario";
     }
 

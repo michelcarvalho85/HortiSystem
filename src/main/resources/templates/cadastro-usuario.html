@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>HortiSystem — Cadastrar Usuário</title>
     <style>
+<<<<<<< HEAD
         :root {
           --accent: #16a34a;
           --danger: #dc2626;
@@ -236,6 +237,136 @@
     <footer>
         © <span th:text="${T(java.time.Year).now()}"/> HortiSystem
     </footer>
+=======
+        :root{
+          --bg:#0f1724;
+          --muted:#98a0ad;
+          --accent-1:#22c55e;
+          --accent-2:#06b6d4;
+          --radius:12px;
+        }
+        *{box-sizing:border-box}
+        body{
+          margin:0;
+          font-family:Inter,system-ui,Arial;
+          background:var(--bg);
+          color:#e6eef6;
+          min-height:100vh;
+          padding:28px;
+          -webkit-font-smoothing:antialiased;
+        }
+        .shell{max-width:640px;margin:0 auto}
+        .topbar{
+          display:flex;align-items:center;gap:12px;padding:12px;border-radius:12px;margin-bottom:18px;
+          background:linear-gradient(90deg,rgba(255,255,255,0.02),transparent);
+          border:1px solid rgba(255,255,255,0.03);
+        }
+        .logo{
+          width:40px;height:40px;border-radius:8px;
+          background:linear-gradient(135deg,var(--accent-1),var(--accent-2));
+          display:flex;align-items:center;justify-content:center;font-weight:700;
+        }
+        .card{
+          background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+          padding:22px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);
+        }
+        h1{margin:0 0 12px;font-size:20px}
+        label{display:block;color:var(--muted);font-size:13px;margin-bottom:6px}
+        input[type="text"], input[type="email"], input[type="password"]{
+          width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);
+          background:transparent;color:inherit;font-size:14px;
+        }
+        .form-row{display:grid;gap:12px}
+        .actions{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+        .btn{padding:10px 12px;border-radius:10px;border:0;font-weight:700;cursor:pointer}
+        .btn-primary{background:linear-gradient(90deg,var(--accent-1),var(--accent-2));color:#022}
+        .btn-ghost{background:transparent;color:var(--muted);border-radius:10px;padding:10px 12px;text-decoration:none;display:inline-flex;align-items:center;justify-content:center}
+        .note{font-size:13px;color:var(--muted);margin-top:8px}
+        /* Checkbox improved layout */
+        .checkbox-row{
+          display:flex;
+          align-items:center;
+          gap:12px;
+          padding:10px;
+          border-radius:8px;
+          border:1px solid rgba(255,255,255,0.03);
+          background:rgba(255,255,255,0.01);
+          margin-bottom:6px;
+        }
+        .checkbox-row input[type="checkbox"]{
+          width:18px;height:18px;
+          accent-color: #22c55e; /* modern checkbox color */
+          flex:0 0 auto;
+          cursor:pointer;
+        }
+        .checkbox-row label{
+          margin:0;
+          font-size:14px;
+          color:var(--muted);
+          cursor:pointer;
+        }
+        .helper-link{color:var(--muted);font-size:13px;text-decoration:none}
+        .helper-link:hover{text-decoration:underline;color:#fff}
+        footer{margin-top:14px;color:var(--muted);text-align:center;font-size:13px}
+        @media(max-width:520px){ .actions{flex-direction:column;align-items:stretch} }
+    </style>
+</head>
+<body>
+<div class="shell">
+    <header class="topbar">
+        <div class="logo">HS</div>
+        <div style="font-weight:800">HortiSystem</div>
+    </header>
+
+    <main class="card">
+        <h1>🔐 Cadastrar Usuário</h1>
+
+        <form th:action="@{/usuario}" th:object="${usuario}" method="post" novalidate>
+            <div style="margin-bottom:12px">
+                <label for="username">Username</label>
+                <input id="username" type="text" th:field="*{username}" required autocomplete="username" />
+            </div>
+
+            <div style="margin-bottom:12px">
+                <label for="email">Email</label>
+                <input id="email" type="email" th:field="*{email}" required autocomplete="email" />
+            </div>
+
+            <div style="margin-bottom:12px">
+                <label for="password">Senha</label>
+                <input id="password" type="password" th:field="*{password}" required autocomplete="new-password" />
+            </div>
+
+            <!-- Checkbox row (melhor alinhado e acessível) -->
+            <div class="checkbox-row">
+                <!-- input com id, label com for para acessibilidade -->
+                <input id="consentimentoLgpd" type="checkbox" th:field="*{consentimentoLgpd}" required />
+                <label for="consentimentoLgpd">
+                    Eu li e aceito a
+                    <a th:href="@{/politica-privacidade}" target="_blank" rel="noopener" class="helper-link">Política de Privacidade</a>.
+                </label>
+            </div>
+
+            <!-- Ações: botão cadastrar, voltar e link para lista de usuários (localhost) -->
+            <div class="actions">
+                <button type="submit" class="btn btn-primary">✅ Cadastrar</button>
+
+                <!-- volta para raiz do sistema (manteve th:href como antes) -->
+                <a th:href="@{/}" class="btn-ghost" role="button">🏠 Voltar</a>
+
+                <!-- link para a listagem solicitada (rota local) -->
+                <a href="http://localhost:8080/usuario/lista" class="btn-ghost" role="button" title="Ir para lista de usuários">📋 Lista de Usuários</a>
+            </div>
+        </form>
+
+        <div style="margin-top:12px">
+            <div th:if="${success}" class="note" style="color:#b7f3d0">✅ <span th:text="${success}"></span></div>
+            <div th:if="${error}" class="note" style="color:#ffadad">⚠️ <span th:text="${error}"></span></div>
+        </div>
+    </main>
+
+    <footer>© <span th:text="${T(java.time.Year).now()}"/> HortiSystem</footer>
+>>>>>>> 2792662d5b50809780d28e9605544be4100c1603
 </div>
 </body>
 </html>

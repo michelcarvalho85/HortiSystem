@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>HortiSystem — Cadastrar Funcionário</title>
     <style>
+<<<<<<< HEAD
         :root {
           --accent: #16a34a;
           --danger: #dc2626;
@@ -209,10 +210,58 @@
                 <div>
                     <label for="nome">Nome Completo</label>
                     <input type="text" id="nome" th:field="*{nome}" placeholder="Ex: João Silva" required>
+=======
+        :root{--bg:#0f1724;--card:#0b1220;--muted:#98a0ad;--accent-1:#22c55e;--accent-2:#06b6d4;--radius:12px}
+        *{box-sizing:border-box}
+        body{margin:0;font-family:Inter, system-ui, Arial;background:var(--bg);color:#e6eef6;min-height:100vh;padding:28px}
+        .shell{max-width:860px;margin:0 auto}
+        .topbar{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-radius:12px;margin-bottom:18px;background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.03)}
+        .brand{display:flex;gap:12px;align-items:center}
+        .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:22px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)}
+        h1{margin:0 0 12px}
+        label{display:block;color:var(--muted);font-size:13px;margin-bottom:6px}
+        input,select{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit}
+        .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+        .actions{display:flex;gap:8px;margin-top:12px}
+        .btn{padding:10px 12px;border-radius:10px;border:0;font-weight:700;cursor:pointer}
+        .btn-primary{background:linear-gradient(90deg,var(--accent-1),var(--accent-2));color:#022}
+        .btn-secondary{background:transparent;color:var(--muted);border:1px solid rgba(255,255,255,0.03)}
+        .alert{padding:10px;border-radius:10px;margin-bottom:12px}
+        .alert-success{background:rgba(34,197,94,0.06);color:#b7f3d0}
+        .alert-error{background:rgba(220,38,38,0.06);color:#ffadad}
+        .field-info{color:var(--muted);font-size:12px;margin-top:6px}
+        footer{margin-top:14px;color:var(--muted);font-size:13px;text-align:center}
+    </style>
+</head>
+<body>
+<div class="shell">
+    <header class="topbar">
+        <div class="brand"><div style="width:36px;height:36px;border-radius:8px;background:linear-gradient(135deg,var(--accent-1),var(--accent-2));display:flex;align-items:center;justify-content:center">HS</div><div style="font-weight:800">HortiSystem</div></div>
+        <nav style="display:flex;gap:8px"><a href="/" style="color:var(--muted);text-decoration:none">🏠 Início</a><a href="/funcionarios/lista" style="color:var(--muted);text-decoration:none">📋 Funcionários</a></nav>
+    </header>
+
+    <main class="card">
+        <h1>👥 Cadastrar Novo Funcionário</h1>
+
+        <div th:if="${success}" class="alert alert-success">✅ <span th:text="${success}"></span></div>
+        <div th:if="${error}" class="alert alert-error">⚠️ <span th:text="${error}"></span>
+            <div class="field-info" th:if="${error.contains('CPF')}">Dica: Use apenas números no CPF (11 dígitos)</div>
+            <div class="field-info" th:if="${error.contains('Email')}">Dica: O email deve conter @</div>
+            <div class="field-info" th:if="${error.contains('Telefone')}">Dica: Telefone deve ter pelo menos 10 dígitos</div>
+        </div>
+
+        <form th:action="@{/funcionarios}" method="post" th:object="${funcionario}">
+            <div class="form-row">
+                <div>
+                    <label for="nome">Nome Completo</label>
+                    <input type="text" id="nome" th:field="*{nome}" required minlength="2" placeholder="Ex: João Silva">
+                    <div class="field-info">Mínimo 2 caracteres</div>
+>>>>>>> 2792662d5b50809780d28e9605544be4100c1603
                 </div>
 
                 <div>
                     <label for="cpf">CPF</label>
+<<<<<<< HEAD
                     <input type="text" id="cpf" th:field="*{cpf}" placeholder="000.000.000-00" required maxlength="14">
                 </div>
             </div>
@@ -221,15 +270,35 @@
                 <div>
                     <label for="telefone">Telefone</label>
                     <input type="tel" id="telefone" th:field="*{telefone}" placeholder="(11) 99999-9999" required>
+=======
+                    <input type="text" id="cpf" th:field="*{cpf}" required placeholder="000.000.000-00" maxlength="14">
+                    <div class="field-info">Formato: 000.000.000-00</div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div>
+                    <label for="telefone">Telefone</label>
+                    <input type="tel" id="telefone" th:field="*{telefone}" required placeholder="(11) 99999-9999">
+                    <div class="field-info">Com DDD</div>
+>>>>>>> 2792662d5b50809780d28e9605544be4100c1603
                 </div>
 
                 <div>
                     <label for="email">Email</label>
+<<<<<<< HEAD
                     <input type="email" id="email" th:field="*{email}" placeholder="funcionario@hortisystem.com" required>
                 </div>
             </div>
 
             <div class="form-grid">
+=======
+                    <input type="email" id="email" th:field="*{email}" required placeholder="funcionario@hortisystem.com">
+                </div>
+            </div>
+
+            <div class="form-row">
+>>>>>>> 2792662d5b50809780d28e9605544be4100c1603
                 <div>
                     <label for="cargo">Cargo</label>
                     <select id="cargo" th:field="*{cargo}" required>
@@ -243,6 +312,7 @@
 
                 <div>
                     <label for="salario">Salário (R$)</label>
+<<<<<<< HEAD
                     <input type="number" id="salario" th:field="*{salario}" min="0" step="0.01" placeholder="Ex: 2500.00">
                 </div>
             </div>
@@ -287,6 +357,57 @@
         e.target.value = v;
       });
     });
+=======
+                    <input type="number" id="salario" th:field="*{salario}" min="0" step="0.01" placeholder="0.00">
+                    <div class="field-info">Ex: 2500.00</div>
+                </div>
+            </div>
+
+            <div style="margin-top:8px">
+                <label for="dataAdmissao">Data de Admissão</label>
+                <input type="date" id="dataAdmissao" th:field="*{dataAdmissao}">
+                <div class="field-info">Data atual ou futura (para testes)</div>
+            </div>
+
+            <div class="actions">
+                <button type="submit" class="btn btn-primary">💾 Cadastrar Funcionário</button>
+                <button type="reset" class="btn btn-secondary">🔄 Limpar</button>
+            </div>
+        </form>
+
+        <div style="margin-top:14px;border-top:1px solid rgba(255,255,255,0.03);padding-top:12px;color:var(--muted)">
+            <a th:href="@{/funcionarios/lista}" style="color:var(--muted);text-decoration:none;margin-right:12px">📋 Ver Lista de Funcionários</a>
+            <a th:href="@{/produto/novo}" style="color:var(--muted);text-decoration:none;margin-right:12px">📦 Cadastrar Produto</a>
+            <a th:href="@{/vendas}" style="color:var(--muted);text-decoration:none">💰 Ir para Vendas</a>
+        </div>
+    </main>
+
+    <footer>© <span th:text="${T(java.time.Year).now()}"/> HortiSystem</footer>
+</div>
+
+<script>
+    (function(){
+      var cpf = document.getElementById('cpf');
+      if(cpf){
+        cpf.addEventListener('input', function(e){
+          var v = e.target.value.replace(/\D/g,'');
+          v = v.replace(/(\d{3})(\d)/,'$1.$2').replace(/(\d{3})(\d)/,'$1.$2').replace(/(\d{3})(\d{1,2})$/,'$1-$2');
+          e.target.value = v;
+        });
+      }
+      var tel = document.getElementById('telefone');
+      if(tel){
+        tel.addEventListener('input', function(e){
+          var v = e.target.value.replace(/\D/g,'');
+          if(v.length<=11){
+            if(v.length<=10){ v = v.replace(/(\d{2})(\d)/,'($1) $2').replace(/(\d{4})(\d)/,'$1-$2'); }
+            else{ v = v.replace(/(\d{2})(\d)/,'($1) $2').replace(/(\d{5})(\d)/,'$1-$2'); }
+            e.target.value = v;
+          }
+        });
+      }
+    })();
+>>>>>>> 2792662d5b50809780d28e9605544be4100c1603
 </script>
 </body>
 </html>

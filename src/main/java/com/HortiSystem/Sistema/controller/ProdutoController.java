@@ -1,11 +1,15 @@
 package com.HortiSystem.Sistema.controller;
 
 import com.HortiSystem.Sistema.model.Produto;
+<<<<<<< HEAD
 import com.HortiSystem.Sistema.service.LGPDLogDbService;
 import com.HortiSystem.Sistema.service.LGPDLogService;
 import com.HortiSystem.Sistema.service.ProdutoService;
 import com.HortiSystem.Sistema.service.LGPDLogDbService; // vamos usar para registrar logs
 import jakarta.servlet.http.HttpServletRequest;
+=======
+import com.HortiSystem.Sistema.service.ProdutoService;
+>>>>>>> 2792662d5b50809780d28e9605544be4100c1603
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+<<<<<<< HEAD
 
 import java.security.Principal;
 import java.util.List;
@@ -20,10 +25,21 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/produto")
+=======
+import java.util.List;
+
+/**
+ * CONTROLADOR DE PRODUTOS - Gerencia as requisições HTTP relacionadas a produtos
+ * Esta classe atua como intermediária entre a view (frontend) e o service (regras de negócio)
+ */
+@Controller
+@RequestMapping("/produto") // Define que todas as URLs começam com /produto
+>>>>>>> 2792662d5b50809780d28e9605544be4100c1603
 public class ProdutoController {
 
     @Autowired
     private ProdutoService service;
+<<<<<<< HEAD
 
     @Autowired
     private LGPDLogDbService lgpdLogDbService;
@@ -75,17 +91,45 @@ public class ProdutoController {
 
                 redirectAttributes.addFlashAttribute("success", "Produto cadastrado com sucesso!");
                 return "redirect:/produto/lista";
+=======
+    private static final Logger log = LoggerFactory.getLogger(ProdutoController.class);
+
+    /**
+     * 1) Mostrar formulário de cadastro (GET /produto/novo)
+     */
+    @GetMapping("/novo")
+    public String novoProdutoForm(Model model) {
+        model.addAttribute("produto", new Produto());
+        return "cadastro-produto"; // templates/cadastro-produto.html
+    }
+
+    /**
+     * 2) Processar cadastro (POST /produto) - ✅ CORRIGIDO COM REDIRECIONAMENTO
+     */
+    @PostMapping
+    public String cadastrar(@ModelAttribute("produto") Produto produto,
+                            RedirectAttributes redirectAttributes) { // ✅ Usa RedirectAttributes
+        try {
+            if (produto.ValidadarDados()) {
+                service.salvar(produto);
+                redirectAttributes.addFlashAttribute("success", "Produto cadastrado com sucesso!");
+                return "redirect:/produto/novo"; // ✅ Redireciona para evitar reenvio
+>>>>>>> 2792662d5b50809780d28e9605544be4100c1603
             } else {
                 redirectAttributes.addFlashAttribute("error", "Dados inválidos! Verifique os campos.");
                 return "redirect:/produto/novo";
             }
         } catch (Exception e) {
+<<<<<<< HEAD
             log.error("Erro ao salvar produto", e);
+=======
+>>>>>>> 2792662d5b50809780d28e9605544be4100c1603
             redirectAttributes.addFlashAttribute("error", "Erro ao salvar: " + e.getMessage());
             return "redirect:/produto/novo";
         }
     }
 
+<<<<<<< HEAD
     // Mapeamento correto: /produto/editar/{id}
     @GetMapping("/editar/{id}")
     public String editarProdutoForm(@PathVariable Long id, Model model, RedirectAttributes ra) {
@@ -186,16 +230,34 @@ public class ProdutoController {
     }
 
 
+=======
+    /**
+     * 3) Exibir página de lista de produtos (GET /produto/lista)
+     */
+>>>>>>> 2792662d5b50809780d28e9605544be4100c1603
     @GetMapping("/lista")
     public String mostrarLista(Model model) {
         List<Produto> produtos = service.listarTodos();
         model.addAttribute("produtos", produtos);
+<<<<<<< HEAD
         return "lista-produtos";
     }
 
+=======
+        return "lista-produtos"; // templates/lista-produtos.html
+    }
+
+    /**
+     * 4) API JSON para buscar todos os produtos (GET /produto/todos)
+     */
+>>>>>>> 2792662d5b50809780d28e9605544be4100c1603
     @GetMapping("/todos")
     @ResponseBody
     public List<Produto> listarTodosProdutos() {
         return service.listarTodos();
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 2792662d5b50809780d28e9605544be4100c1603
