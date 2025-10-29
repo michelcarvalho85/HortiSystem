@@ -68,7 +68,7 @@ public class Produto {
      * MÉTODO DE VALIDAÇÃO - Verifica se os dados do produto são válidos
      * @return true se todos os dados estão válidos, false caso contrário
      */
-    public boolean ValidadarDados(){
+    public boolean validarDados(){
         // Verifica se nome não é nulo ou vazio
         if (nome == null || nome.isBlank()) return false;
 

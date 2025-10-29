@@ -3,21 +3,15 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>HortiSystem — Cadastrar Produto</title>
+    <title>HortiSystem — Editar Produto</title>
     <style>
         :root {
           --accent: #16a34a;
           --danger: #dc2626;
-          --warning: #f59e0b;
-          --success: #16a34a;
-          --text-muted: #6b7280;
           --bg: #f3f4f6;
         }
 
-        * {
-          box-sizing: border-box;
-          font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
-        }
+        * { box-sizing: border-box; font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial; }
 
         body {
           margin: 0;
@@ -39,7 +33,6 @@
           overflow: hidden;
         }
 
-        /* Topbar */
         .header {
           background: #111827;
           color: white;
@@ -57,14 +50,7 @@
           border-radius: 8px;
         }
 
-        .header span {
-          font-weight: 600;
-          font-size: 1.1rem;
-        }
-
-        main {
-          padding: 28px;
-        }
+        main { padding: 28px; }
 
         h1 {
           font-size: 1.4rem;
@@ -91,12 +77,6 @@
           border: 1px solid #d1d5db;
           border-radius: 8px;
           font-size: 0.95rem;
-          transition: border-color 0.2s;
-        }
-
-        input:focus, select:focus {
-          border-color: var(--accent);
-          outline: none;
         }
 
         .actions {
@@ -114,57 +94,29 @@
           cursor: pointer;
           font-weight: 600;
           font-size: 0.9rem;
-          transition: all 0.2s;
         }
 
         .btn-primary {
           background: var(--accent);
-          color: #fff;
+          color: white;
         }
 
-        .btn-primary:hover {
-          background: #15803d;
-        }
+        .btn-primary:hover { background: #15803d; }
 
         .btn-secondary {
           background: #e5e7eb;
           color: #111827;
         }
 
-        .btn-secondary:hover {
-          background: #d1d5db;
-        }
-
-        .menu {
-          margin-top: 20px;
-          border-top: 1px solid #e5e7eb;
-          padding-top: 16px;
-          text-align: center;
-        }
-
-        .menu a {
-          color: var(--text-muted);
-          text-decoration: none;
-          margin: 0 10px;
-          font-size: 0.9rem;
-        }
-
-        .menu a:hover {
-          color: #111827;
-        }
+        .btn-secondary:hover { background: #d1d5db; }
 
         footer {
           background: #f9fafb;
-          color: var(--text-muted);
+          color: #6b7280;
           font-size: 0.8rem;
           text-align: center;
           padding: 12px;
           border-top: 1px solid #e5e7eb;
-        }
-
-        @media(max-width: 768px) {
-          main { padding: 20px; }
-          .btn { font-size: 0.85rem; }
         }
     </style>
 </head>
@@ -176,35 +128,19 @@
     </header>
 
     <main>
-        <h1>🧺 Cadastrar Produto</h1>
+        <h1>✏️ Editar Produto</h1>
 
-        <!-- Mensagens de sucesso ou erro -->
-        <div th:if="${success}"
-             style="background:#dcfce7;
-            border:1px solid #bbf7d0;
-            color:#166534;
-            padding:12px 14px;
-            border-radius:8px;
-            margin-bottom:18px;
-            font-weight:600;
-            text-align:center;">
+        <div th:if="${success}" style="background:#dcfce7; border:1px solid #bbf7d0; color:#166534; padding:12px; border-radius:8px; margin-bottom:18px; text-align:center; font-weight:600;">
             ✅ <span th:text="${success}"></span>
         </div>
 
-        <div th:if="${error}"
-             style="background:#fee2e2;
-            border:1px solid #fecaca;
-            color:#dc2626;
-            padding:12px 14px;
-            border-radius:8px;
-            margin-bottom:18px;
-            font-weight:600;
-            text-align:center;">
+        <div th:if="${error}" style="background:#fee2e2; border:1px solid #fecaca; color:#dc2626; padding:12px; border-radius:8px; margin-bottom:18px; text-align:center; font-weight:600;">
             ⚠️ <span th:text="${error}"></span>
         </div>
 
+        <form th:action="@{/produto/editar}" th:object="${produto}" method="post">
+            <input type="hidden" th:field="*{id}"/>
 
-        <form th:action="@{/produto/salvar}" th:object="${produto}" method="post">
             <div>
                 <label for="nome">Nome</label>
                 <input type="text" id="nome" th:field="*{nome}" required>
@@ -237,20 +173,14 @@
             </div>
 
             <div class="actions">
-                <button type="submit" class="btn btn-primary">💾 Salvar Produto</button>
+                <button type="submit" class="btn btn-primary">💾 Atualizar</button>
                 <a th:href="@{/produto/lista}" class="btn btn-secondary">⬅️ Voltar</a>
             </div>
         </form>
-
-        <div class="menu">
-            <a th:href="@{/produto/lista}">📦 Ver Produtos</a>
-            <a th:href="@{/funcionarios/lista}">👥 Lista de Funcionários</a>
-            <a th:href="@{/vendas}">💰 Ir para Vendas</a>
-        </div>
     </main>
 
     <footer>
-        © <span th:text="${T(java.time.Year).now()}"/> HortiSystem
+        © <span th:text="${T(java.time.Year).now()}"></span> HortiSystem
     </footer>
 </div>
 </body>

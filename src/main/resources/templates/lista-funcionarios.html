@@ -5,38 +5,218 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>HortiSystem — Lista de Funcionários</title>
     <style>
-        :root{--bg:#0f1724;--muted:#98a0ad;--accent:#2563eb;--success:#22c55e}
-        *{box-sizing:border-box}
-        body{margin:0;font-family:Inter,system-ui,Arial;background:var(--bg);color:#e6eef6;min-height:100vh;padding:28px}
-        .shell{max-width:1100px;margin:0 auto}
-        .topbar{display:flex;align-items:center;gap:12px;padding:12px;border-radius:12px;margin-bottom:18px;background:linear-gradient(90deg,rgba(255,255,255,0.02),transparent);border:1px solid rgba(255,255,255,0.03)}
-        .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:18px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)}
-        h1{margin:0 0 12px}
-        .table{width:100%;border-collapse:collapse;background:transparent}
-        th,td{padding:12px 10px;text-align:left;border-bottom:1px solid rgba(255,255,255,0.03);color:inherit}
-        th{background:linear-gradient(90deg,var(--accent),rgba(255,255,255,0.02));color:#fff}
-        tr:hover{background:rgba(255,255,255,0.01)}
-        .btn{padding:8px 10px;border-radius:8px;border:0;cursor:pointer;font-weight:700}
-        .btn-edit{background:#f59e0b;color:#021}
-        .btn-demissao{background:#ef4444;color:#fff}
-        .btn-reativar{background:var(--success);color:#021}
-        .empty{padding:24px;text-align:center;color:var(--muted)}
-        .menu{margin-top:12px;border-top:1px solid rgba(255,255,255,0.03);padding-top:12px;color:var(--muted)}
-        footer{margin-top:12px;color:var(--muted);text-align:center}
-        @media(max-width:820px){ th,td{padding:10px 8px} }
+        :root {
+          --accent: #16a34a;
+          --danger: #dc2626;
+          --warning: #f59e0b;
+          --success: #16a34a;
+          --text-muted: #6b7280;
+          --bg: #f3f4f6;
+        }
+
+        * {
+          box-sizing: border-box;
+          font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+        }
+
+        body {
+          margin: 0;
+          background: var(--bg);
+          display: flex;
+          justify-content: center;
+          align-items: flex-start;
+          min-height: 100vh;
+          padding: 40px 16px;
+          color: #1f2937;
+        }
+
+        .container {
+          width: 100%;
+          max-width: 1100px;
+          background: white;
+          border-radius: 14px;
+          box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+          overflow: hidden;
+        }
+
+        /* Topbar */
+        .header {
+          background: #111827;
+          color: white;
+          padding: 18px 24px;
+          display: flex;
+          align-items: center;
+          gap: 10px;
+        }
+
+        .logo {
+          background: #065f46;
+          color: white;
+          font-weight: 700;
+          padding: 10px 12px;
+          border-radius: 8px;
+        }
+
+        .header span {
+          font-weight: 600;
+          font-size: 1.1rem;
+        }
+
+        /* Conteúdo principal */
+        main {
+          padding: 28px;
+        }
+
+        h1 {
+          font-size: 1.4rem;
+          margin-bottom: 16px;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        }
+
+        /* Mensagens */
+        .message {
+          padding: 10px;
+          border-radius: 8px;
+          font-weight: 600;
+          margin-bottom: 14px;
+        }
+
+        .message.success {
+          background: #dcfce7;
+          border: 1px solid #bbf7d0;
+          color: #166534;
+        }
+
+        .message.error {
+          background: #fee2e2;
+          border: 1px solid #fecaca;
+          color: var(--danger);
+        }
+
+        /* Tabela */
+        .table {
+          width: 100%;
+          border-collapse: collapse;
+          background: white;
+          border-radius: 8px;
+          overflow: hidden;
+        }
+
+        th {
+          background: #111827;
+          color: white;
+          text-align: left;
+          padding: 12px 10px;
+          font-weight: 600;
+          font-size: 0.9rem;
+        }
+
+        td {
+          padding: 12px 10px;
+          border-bottom: 1px solid #e5e7eb;
+          font-size: 0.95rem;
+        }
+
+        tr:hover {
+          background: #f9fafb;
+        }
+
+        .empty {
+          text-align: center;
+          color: var(--text-muted);
+          padding: 20px;
+        }
+
+        /* Botões */
+        .btn {
+          display: inline-block;
+          padding: 8px 12px;
+          border: none;
+          border-radius: 8px;
+          cursor: pointer;
+          font-weight: 600;
+          font-size: 0.9rem;
+          transition: all 0.2s;
+        }
+
+        .btn-edit {
+          background: var(--warning);
+          color: #fff;
+        }
+
+        .btn-edit:hover {
+          background: #d97706;
+        }
+
+        .btn-demissao {
+          background: var(--danger);
+          color: #fff;
+        }
+
+        .btn-demissao:hover {
+          background: #b91c1c;
+        }
+
+        .btn-reativar {
+          background: var(--success);
+          color: #fff;
+        }
+
+        .btn-reativar:hover {
+          background: #15803d;
+        }
+
+        /* Menu inferior */
+        .menu {
+          margin-top: 20px;
+          border-top: 1px solid #e5e7eb;
+          padding-top: 16px;
+          text-align: center;
+        }
+
+        .menu a {
+          color: var(--text-muted);
+          text-decoration: none;
+          margin: 0 10px;
+          font-size: 0.9rem;
+        }
+
+        .menu a:hover {
+          color: #111827;
+        }
+
+        footer {
+          background: #f9fafb;
+          color: var(--text-muted);
+          font-size: 0.8rem;
+          text-align: center;
+          padding: 12px;
+          border-top: 1px solid #e5e7eb;
+        }
+
+        @media(max-width: 768px) {
+          main { padding: 20px; }
+          th, td { font-size: 0.85rem; padding: 8px; }
+          .menu { font-size: 0.8rem; }
+        }
     </style>
 </head>
 <body>
-<div class="shell">
-    <header class="topbar"><div style="width:36px;height:36px;border-radius:8px;background:linear-gradient(135deg,#22c55e,#06b6d4);display:flex;align-items:center;justify-content:center">HS</div><div style="font-weight:800">HortiSystem</div></header>
+<div class="container">
+    <header class="header">
+        <div class="logo">HS</div>
+        <span>HortiSystem</span>
+    </header>
 
-    <main class="card">
+    <main>
         <h1>📋 Lista de Funcionários</h1>
 
-        <div th:if="${success}" style="margin-bottom:12px;color:#b7f3d0">✅ <span th:text="${success}"></span></div>
-        <div th:if="${error}" style="margin-bottom:12px;color:#ffadad">⚠️ <span th:text="${error}"></span></div>
+        <div th:if="${success}" class="message success">✅ <span th:text="${success}"></span></div>
+        <div th:if="${error}" class="message error">⚠️ <span th:text="${error}"></span></div>
 
-        <div style="overflow:auto">
+        <div style="overflow-x:auto">
             <table class="table" role="table" aria-label="Tabela de funcionários">
                 <thead>
                 <tr>
@@ -61,8 +241,8 @@
                     <td th:text="${funcionario.email}"></td>
                     <td th:text="'R$ ' + ${#numbers.formatDecimal(funcionario.salario, 1, 2, 'POINT')}"></td>
                     <td>
-                        <span th:if="${funcionario.ativo}" style="color:#b7f3d0;font-weight:700">✅ Ativo</span>
-                        <span th:unless="${funcionario.ativo}" style="color:#ffadad;font-weight:700">⛔ Inativo</span>
+                        <span th:if="${funcionario.ativo}" style="color:#16a34a;font-weight:600">✅ Ativo</span>
+                        <span th:unless="${funcionario.ativo}" style="color:#dc2626;font-weight:600">⛔ Inativo</span>
                     </td>
                     <td>
                         <a th:href="@{/funcionarios/editar/{id}(id=${funcionario.id})}" class="btn btn-edit">✏️ Editar</a>
@@ -81,13 +261,15 @@
         </div>
 
         <div class="menu">
-            <a th:href="@{/funcionarios/novo}" style="color:var(--muted);text-decoration:none;margin-right:12px">👥 Cadastrar Novo Funcionário</a>
-            <a th:href="@{/produto/lista}" style="color:var(--muted);text-decoration:none;margin-right:12px">📦 Ver Produtos</a>
-            <a th:href="@{/vendas}" style="color:var(--muted);text-decoration:none">💰 Ir para Vendas</a>
+            <a th:href="@{/funcionarios/novo}">👥 Cadastrar Novo Funcionário</a>
+            <a th:href="@{/produto/lista}">📦 Ver Produtos</a>
+            <a th:href="@{/vendas}">💰 Ir para Vendas</a>
         </div>
     </main>
 
-    <footer>© <span th:text="${T(java.time.Year).now()}"/> HortiSystem</footer>
+    <footer>
+        © <span th:text="${T(java.time.Year).now()}"/> HortiSystem
+    </footer>
 </div>
 </body>
 </html>

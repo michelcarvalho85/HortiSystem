@@ -12,7 +12,7 @@ import java.util.Optional;
 public class LGPDLogDbService {
 
     @Autowired
-    private LogEventoRepository logRepo;
+    private static LogEventoRepository logRepo;
 
     /**
      * Registrar evento no banco de dados.
@@ -26,14 +26,14 @@ public class LGPDLogDbService {
      * @param nivel        nível do evento (INFO, WARN, ERROR, SECURITY)
      * @param correlationId id de correlação (nullable)
      */
-    public void registrarEvento(String usuario,
-                                Long usuarioId,
-                                String acao,
-                                String recurso,
-                                String detalhes,
-                                String ip,
-                                String nivel,
-                                String correlationId) {
+    public static void registrarEvento(String usuario,
+                                       Long usuarioId,
+                                       String acao,
+                                       String recurso,
+                                       String detalhes,
+                                       String ip,
+                                       String nivel,
+                                       String correlationId) {
         try {
             LogEvento log = new LogEvento();
             log.setUsuario(usuario != null ? usuario : "Anônimo");
@@ -57,13 +57,13 @@ public class LGPDLogDbService {
      * Método compatível com chamadas existentes no projeto: registrar(usuario, usuarioId, acao, recurso, ip, detalhes, nivel)
      * Ele apenas reordena/encaminha os parâmetros para o método registrarEvento(...) existente.
      */
-    public void registrar(String usuario,
-                          Long usuarioId,
-                          String acao,
-                          String recurso,
-                          String ip,
-                          String detalhes,
-                          String nivel) {
+    public static void registrar(String usuario,
+                                 Long usuarioId,
+                                 String acao,
+                                 String recurso,
+                                 String ip,
+                                 String detalhes,
+                                 String nivel) {
         // Note: a sua implementação principal espera (usuario, usuarioId, acao, recurso, detalhes, ip, nivel, correlationId)
         // Aqui nós fazemos o re-mapeamento para manter compatibilidade com as chamadas atuais.
         registrarEvento(usuario, usuarioId, acao, recurso, detalhes, ip, nivel, null);
@@ -73,4 +73,5 @@ public class LGPDLogDbService {
     public void registrarEvento(String usuario, String acao, String recurso, String detalhes, String ip, String nivel) {
         registrarEvento(usuario, null, acao, recurso, detalhes, ip, nivel, null);
     }
+
 }
