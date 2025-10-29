@@ -602,6 +602,7 @@ org.thymeleaf.exceptions.TemplateInputException: Error resolving template [edita
 2025-10-27 02:12:51 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
 2025-10-27 02:12:51 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
 2025-10-27 02:12:51 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+<<<<<<< HEAD
 2025-10-29 14:59:42 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
 2025-10-29 14:59:42 [restartedMain] INFO  c.H.Sistema.SistemaApplication - Starting SistemaApplication using Java 21.0.8 with PID 20800 (C:\Users\miche\Desktop\PIM\HortiSystem-main\target\classes started by miche in C:\Users\miche\Desktop\PIM\HortiSystem-main)
 2025-10-29 14:59:42 [restartedMain] INFO  c.H.Sistema.SistemaApplication - No active profile set, falling back to 1 default profile: "default"
@@ -963,3 +964,5 @@ Unconditional classes:
 2025-10-29 16:42:29 [http-nio-8080-exec-5] INFO  c.H.S.s.CustomUserDetailsService - =========================
 2025-10-29 16:42:40 [http-nio-8080-exec-8] WARN  o.t.s.p.AbstractStandardFragmentInsertionTagProcessor - [THYMELEAF][http-nio-8080-exec-8][relatorios] Deprecated unwrapped fragment expression "index :: header" found in template relatorios, line 31, col 9. Please use the complete syntax of fragment expressions instead ("~{index :: header}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
 2025-10-29 16:43:32 [http-nio-8080-exec-4] WARN  o.t.s.p.AbstractStandardFragmentInsertionTagProcessor - [THYMELEAF][http-nio-8080-exec-4][relatorios] Deprecated unwrapped fragment expression "index :: header" found in template relatorios, line 31, col 9. Please use the complete syntax of fragment expressions instead ("~{index :: header}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+=======
+>>>>>>> c2bf4e4858473142a2841cf09ba75355b6f8c8b3

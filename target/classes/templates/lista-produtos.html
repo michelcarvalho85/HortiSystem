@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>HortiSystem — Lista de Produtos</title>
+    <style>
+        :root {
+          --accent: #16a34a;
+          --danger: #dc2626;
+          --text-muted: #6b7280;
+          --bg: #f3f4f6;
+        }
+
+        * {
+          box-sizing: border-box;
+          font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+        }
+
+        body {
+          margin: 0;
+          background: var(--bg);
+          display: flex;
+          justify-content: center;
+          align-items: flex-start;
+          min-height: 100vh;
+          padding: 40px 16px;
+          color: #1f2937;
+        }
+
+        .container {
+          width: 100%;
+          max-width: 1000px;
+          background: white;
+          border-radius: 14px;
+          box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+          overflow: hidden;
+        }
+
+        /* Cabeçalho */
+        .header {
+          background: #111827;
+          color: white;
+          padding: 18px 24px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        }
+
+        .logo {
+          background: #065f46;
+          color: white;
+          font-weight: 700;
+          padding: 10px 12px;
+          border-radius: 8px;
+        }
+
+        .header span {
+          font-weight: 600;
+          font-size: 1.1rem;
+          margin-left: 10px;
+        }
+
+        .btn-novo {
+          background: var(--accent);
+          color: white;
+          text-decoration: none;
+          padding: 10px 16px;
+          border-radius: 8px;
+          font-weight: 600;
+          transition: background 0.2s;
+        }
+
+        .btn-novo:hover {
+          background: #15803d;
+        }
+
+        main {
+          padding: 28px;
+        }
+
+        h1 {
+          font-size: 1.4rem;
+          margin-bottom: 16px;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        }
+
+        .controls {
+          display: flex;
+          gap: 12px;
+          flex-wrap: wrap;
+          margin-bottom: 18px;
+        }
+
+        input, select {
+          padding: 10px 12px;
+          border: 1px solid #d1d5db;
+          border-radius: 8px;
+          font-size: 0.95rem;
+          flex: 1;
+        }
+
+        button.btn {
+          padding: 10px 16px;
+          border: none;
+          border-radius: 8px;
+          font-weight: 600;
+          background: var(--accent);
+          color: #fff;
+          cursor: pointer;
+        }
+
+        button.btn:hover {
+          background: #15803d;
+        }
+
+        table {
+          width: 100%;
+          border-collapse: collapse;
+          font-size: 0.95rem;
+        }
+
+        th, td {
+          text-align: left;
+          padding: 12px;
+          border-bottom: 1px solid #e5e7eb;
+        }
+
+        th {
+          background: #f9fafb;
+          color: #111827;
+        }
+
+        tr:hover {
+          background: #f3f4f6;
+        }
+
+        .actions {
+          display: flex;
+          gap: 6px;
+        }
+
+        .btn-edit {
+          background: #f59e0b;
+          color: white;
+          border: none;
+          padding: 6px 10px;
+          border-radius: 6px;
+          cursor: pointer;
+        }
+
+        .btn-edit:hover {
+          background: #d97706;
+        }
+
+        .btn-del {
+          background: var(--danger);
+          color: white;
+          border: none;
+          padding: 6px 10px;
+          border-radius: 6px;
+          cursor: pointer;
+        }
+
+        .btn-del:hover {
+          background: #b91c1c;
+        }
+
+        .empty {
+          text-align: center;
+          padding: 24px;
+          color: var(--text-muted);
+        }
+
+        .menu {
+          margin-top: 20px;
+          border-top: 1px solid #e5e7eb;
+          padding-top: 16px;
+          text-align: center;
+        }
+
+        .menu a {
+          color: var(--text-muted);
+          text-decoration: none;
+          margin: 0 10px;
+          font-size: 0.9rem;
+        }
+
+        .menu a:hover {
+          color: #111827;
+        }
+
+        footer {
+          background: #f9fafb;
+          color: var(--text-muted);
+          font-size: 0.8rem;
+          text-align: center;
+          padding: 12px;
+          border-top: 1px solid #e5e7eb;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header class="header">
+        <div style="display:flex;align-items:center;gap:8px">
+            <div class="logo">HS</div>
+            <span>HortiSystem</span>
+        </div>
+        <a th:href="@{/produto/novo}" class="btn-novo">+ Novo Produto</a>
+    </header>
+
+    <main>
+        <h1>📋 Lista de Produtos</h1>
+
+        <div class="controls">
+            <input type="text" id="searchInput" placeholder="Buscar por nome...">
+            <select id="categoriaFilter">
+                <option value="">Todas as categorias</option>
+                <option value="Fruta">Frutas</option>
+                <option value="Verdura">Verduras</option>
+                <option value="Legume">Legumes</option>
+            </select>
+            <button class="btn" id="btnFilter">🔍 Filtrar</button>
+        </div>
+
+        <div style="overflow:auto;">
+            <table id="produtosTable">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Categoria</th>
+                    <th>Quantidade</th>
+                    <th>Valor (R$)</th>
+                    <th>Unidade</th>
+                    <th>Ações</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr><td colspan="7" class="empty">Carregando produtos...</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="menu">
+            <a th:href="@{/produto/novo}">➕ Cadastrar Produto</a>
+            <a th:href="@{/funcionarios/lista}">👥 Funcionários</a>
+            <a th:href="@{/}">🏠 Página Inicial</a>
+        </div>
+    </main>
+
+    <footer>
+        © <span th:text="${T(java.time.Year).now()}"/> HortiSystem
+    </footer>
+</div>
+
+<script>
+    async function carregarProdutos() {
+      try {
+        const res = await fetch('/produto/todos');
+        const produtos = await res.json();
+        const tbody = document.querySelector('#produtosTable tbody');
+        tbody.innerHTML = '';
+
+        if (!produtos || produtos.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="7" class="empty">Nenhum produto cadastrado.</td></tr>';
+          return;
+        }
+
+        produtos.forEach(p => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td>${p.id}</td>
+            <td>${p.nome}</td>
+            <td>${p.categoria}</td>
+            <td>${p.quantidade}</td>
+            <td>R$ ${p.valor.toFixed(2)}</td>
+            <td>${p.unidadeMedida}</td>
+            <td class="actions">
+                <button class="btn btn-edit" onclick="window.location.href='/produto/editar/${p.id}'">✏️</button>
+                <button class="btn-del" onclick="excluirProduto(${p.id})">🗑️</button>
+            </td>
+          `;
+          tbody.appendChild(tr);
+        });
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    function filtrarProdutos() {
+      alert('Funcionalidade de filtro em desenvolvimento!');
+    }
+    function editarProduto(id) {
+      alert('Editar produto ID: ' + id + ' — em desenvolvimento');
+    }
+    function excluirProduto(id) {
+      if (confirm('Tem certeza?')) alert('Excluir produto ID: ' + id + ' — em desenvolvimento');
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      carregarProdutos();
+      document.getElementById('btnFilter').addEventListener('click', filtrarProdutos);
+    });
+</script>
+</body>
+</html>

@@ -11,5 +11,8 @@
 [2025-10-25 03:19:14] Usuário: root | Ação: Cadastro de Usuário | Detalhes: Usuário criado com sucesso.
 [2025-10-25 03:23:38] Usuário: Michel | Ação: Cadastro de Usuário | Detalhes: Usuário criado com sucesso.
 [2025-10-27 02:09:25] Usuário: admin | Ação: PRODUCT.UPDATE | Detalhes: Produto id=1 nome=Tomato
+<<<<<<< HEAD
 [2025-10-29 15:53:27] Usuário: root | Ação: PRODUCT.CREATE | Detalhes: Produto id=8 nome=Morango
 [2025-10-29 15:54:57] Usuário: root | Ação: PRODUCT.UPDATE | Detalhes: Produto id=8 nome=Morango
+=======
+>>>>>>> c2bf4e4858473142a2841cf09ba75355b6f8c8b3

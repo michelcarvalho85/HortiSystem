@@ -1,3 +1,4 @@
+<<<<<<< HEAD
     <!doctype html>
     <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
     <head>
@@ -218,3 +219,225 @@
     </div>
     </body>
     </html>
+=======
+<!doctype html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="${pageTitle} ?: 'HortiSystem — Gestão Moderna'">HortiSystem — Gestão Moderna</title>
+
+    <!-- Fonte -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root{
+          --header:#33383b;
+          --footer-band:#2c3133;
+          --brand-accent:#b6f42b;
+          --accent-dark:#2bb06a;
+          --muted:#9aa3a0;
+          --bg:#fafbf9;
+          --card:#ffffff;
+          --radius:10px;
+          --shadow: 0 12px 34px rgba(16,24,18,0.08);
+          --maxw:1300px;
+          --text-dark:#08210f;
+          --logout-red: #ef4444;
+        }
+        *{box-sizing:border-box}
+        html,body{height:100%;margin:0}
+        body{
+          font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+          background:var(--bg);
+          color:var(--text-dark);
+          -webkit-font-smoothing:antialiased;
+          line-height:1.4;
+        }
+
+        .container{max-width:var(--maxw);margin:0 auto;padding:20px}
+
+        header.site-header{
+          background:var(--header);color:#fff;padding:12px 16px;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.12);
+          display:flex;align-items:center;justify-content:space-between;gap:14px;position:sticky;top:12px;z-index:40;
+        }
+        .header-inner{display:flex;align-items:center;gap:16px;width:100%}
+        .brand-area{display:flex;align-items:center;gap:18px;min-width:0}
+        .brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;flex-shrink:0}
+        .logo{width:62px;height:46px;border-radius:6px;display:flex;align-items:center;justify-content:center;background:linear-gradient(90deg,var(--accent-dark),#79e07b);color:#07220f;font-weight:800;font-size:20px;box-shadow:0 8px 20px rgba(0,0,0,0.2)}
+        .brand .title{font-weight:800;font-size:16px}
+        .brand .subtitle{font-size:12px;color:rgba(255,255,255,0.75)}
+
+        .top-topics{
+          display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding-left:6px;
+        }
+        .top-topic{
+          display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:8px;
+          background:rgba(255,255,255,0.03);color:rgba(255,255,255,0.92);text-decoration:none;font-weight:700;font-size:13px;border:1px solid rgba(255,255,255,0.03)
+        }
+        .top-topic:hover{background:linear-gradient(90deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));}
+
+        nav.main-nav{flex:1;display:flex;justify-content:center;align-items:center;gap:12px}
+        nav.main-nav a{color:rgba(255,255,255,0.9);text-decoration:none;font-weight:700;padding:8px 10px;border-radius:6px}
+        nav.main-nav a:hover{background:rgba(0,0,0,0.12)}
+
+        .header-actions{display:flex;align-items:center;gap:10px}
+        .cta-secondary{color:rgba(255,255,255,0.85);padding:8px 10px;border-radius:8px;text-decoration:none;border:1px solid rgba(255,255,255,0.06)}
+
+        .logout-btn{
+          background:var(--logout-red);
+          color:#fff;border:none;padding:8px 12px;border-radius:8px;font-weight:800;cursor:pointer;
+          box-shadow: 0 6px 18px rgba(239,68,68,0.12);
+        }
+        .logout-btn:hover{filter:brightness(0.95);transform:translateY(-1px)}
+
+        .hero{position:relative;margin-top:18px;border-radius:10px;overflow:hidden;box-shadow:var(--shadow)}
+        .hero-media{width:100%;height:520px;background-size:cover;background-position:center;display:block;filter:contrast(0.98) saturate(1.02)}
+        .overlay{position:absolute;inset:0;background:linear-gradient(90deg, rgba(6,24,12,0.55), rgba(6,24,12,0.15));pointer-events:none}
+        .hero-content{position:absolute;left:48px;top:56px;max-width:56%;color:#fff;z-index:3}
+        .eyebrow{font-weight:700;color:rgba(182,244,43,0.95);letter-spacing:0.06em;margin-bottom:8px}
+        .hero-title{margin:0;font-size:64px;line-height:0.98;font-weight:900;text-shadow:0 10px 30px rgba(2,6,3,0.45)}
+        .lead{font-size:18px;color:rgba(255,255,255,0.92);margin-top:12px;font-weight:600}
+        .hero .cta-row{display:flex;gap:12px;margin-top:18px}
+        .btn-primary{background:var(--brand-accent);color:#07220f;padding:12px 16px;border-radius:10px;font-weight:900;text-decoration:none}
+        .btn-ghost{background:transparent;border:2px solid rgba(255,255,255,0.18);color:#fff;padding:10px 14px;border-radius:10px;text-decoration:none;font-weight:700}
+
+        .main-content{margin-top:22px;display:block}
+
+        /* Card agora com o mesmo fundo do hero */
+        .card{
+          background-size:cover;
+          background-position:center;
+          color:#fff;
+          padding:22px;
+          border-radius:12px;
+          border:1px solid rgba(6,24,12,0.04);
+          box-shadow:0 10px 30px rgba(2,6,3,0.04);
+        }
+        .card[th\\:style] {
+          background-image: inherit;
+        }
+
+        .feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:18px}
+        .feature{background:rgba(0,0,0,0.25);padding:18px;border-radius:14px;border:1px solid rgba(255,255,255,0.1);min-height:110px}
+        .feature h5{color:#fff}
+        .muted{color:rgba(255,255,255,0.85)}
+
+        footer{margin-top:14px;color:var(--muted);font-size:13px;text-align:center;padding:18px 0}
+
+        @media (max-width:1100px){
+          .hero-title{font-size:48px}
+          .feature-grid{grid-template-columns:repeat(2,1fr)}
+          nav.main-nav{display:none}
+        }
+        @media (max-width:760px){
+          .top-topics{display:none}
+          .brand .title{font-size:15px}
+          .brand .subtitle{display:none}
+        }
+        @media (max-width:560px){
+          .hero-media{height:360px}
+          .hero-title{font-size:28px}
+          .feature-grid{grid-template-columns:1fr}
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <!-- Header -->
+    <header class="site-header" role="banner">
+        <div class="header-inner" style="width:100%">
+            <div class="brand-area">
+                <a class="brand" th:href="@{/}">
+                    <div class="logo">HS</div>
+                    <div>
+                        <div class="title" th:text="${appName} ?: 'HortiSystem'">HortiSystem</div>
+                        <div class="subtitle" th:text="${appSubtitle} ?: 'Gestão Moderna'">Gestão Moderna</div>
+                    </div>
+                </a>
+
+                <nav class="top-topics" aria-label="Tópicos principais">
+                    <a class="top-topic" th:href="@{/produto/lista}">Produtos</a>
+                    <a class="top-topic" th:href="@{/funcionarios/lista}">Funcionários</a>
+                    <a class="top-topic" th:href="@{/usuario/lista}">Usuários</a>
+                    <a class="top-topic" th:href="@{http://localhost:8080/caixa}">Caixa</a>
+                    <a class="top-topic" th:href="@{/relatorios}">Relatórios</a>
+                </nav>
+            </div>
+
+            <nav class="main-nav" role="navigation" aria-label="Navegação principal"></nav>
+
+            <div class="header-actions" role="group" aria-label="Ações do cabeçalho">
+                <a class="cta-secondary" th:href="@{/perfil}" th:text="${currentUser != null ? currentUser.name : 'Administrador'}">Administrador</a>
+
+                <form th:action="@{/logout}" method="post" style="margin:0;display:inline-block">
+                    <input type="hidden" th:if="${_csrf != null}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                    <button type="submit" class="logout-btn" aria-label="Sair">🔒 Sair</button>
+                </form>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero" role="main" aria-labelledby="hero-title">
+        <div class="hero-media"
+             th:if="${heroImage != null}"
+             th:style="|background-image: url(${heroImage});|"
+             th:attr="aria-label=${heroImageAlt} ?: 'Imagem principal'">
+        </div>
+        <div class="hero-media" th:unless="${heroImage != null}" style="background-image: url('/images/hero-default.jpg');" aria-label="Imagem principal"></div>
+
+        <div class="overlay" aria-hidden="true"></div>
+
+        <div class="hero-content">
+            <div class="eyebrow" th:text="${heroEyebrow} ?: 'Sistema para Hortifrúti'">Sistema para Hortifrúti</div>
+            <h1 id="hero-title" class="hero-title" th:text="${heroTitle} ?: 'HortiSystem —— Gestão Simples'">HortiSystem —— Gestão Simples</h1>
+            <p class="lead" th:text="${heroLead} ?: 'Organize estoque, preços e categorias com painéis limpos, rápidos e fáceis de navegar.'">
+                Organize estoque, preços e categorias com painéis limpos, rápidos e fáceis de navegar.
+            </p>
+
+            <div class="cta-row" style="margin-top:18px">
+                <a class="btn-primary" th:href="@{/produto/novo}">➕ Cadastrar Produto</a>
+                <a class="btn-ghost" th:href="@{/produto/lista}">📋 Ver Lista</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main content -->
+    <main class="main-content">
+        <div class="card"
+             th:if="${heroImage != null}"
+             th:style="|background-image: url(${heroImage});|">
+            <section style="margin-top:8px">
+                <div class="feature-grid" role="list">
+                    <div class="feature" role="listitem">
+                        <div class="icon">📦</div>
+                        <h5>Controle de Estoque</h5>
+                        <div class="muted">Níveis, validade e movimentações.</div>
+                    </div>
+
+                    <div class="feature" role="listitem">
+                        <div class="icon">💰</div>
+                        <h5>Gestão de Preços</h5>
+                        <div class="muted">Preço por unidade, promoções e histórico.</div>
+                    </div>
+
+                    <div class="feature" role="listitem">
+                        <div class="icon">📊</div>
+                        <h5>Categorização</h5>
+                        <div class="muted">Filtrar e agrupar por categoria e fornecedor.</div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        © <span th:text="${#dates.format(#dates.createNow(),'yyyy')}">2025</span> HortiSystem — Interface moderna e acessível • Desenvolvido para hortifrúti
+    </footer>
+
+</div>
+</body>
+</html>
+>>>>>>> c2bf4e4858473142a2841cf09ba75355b6f8c8b3

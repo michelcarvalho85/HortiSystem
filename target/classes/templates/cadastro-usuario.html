@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>HortiSystem — Cadastrar Usuário</title>
+    <style>
+        :root {
+          --accent: #16a34a;
+          --danger: #dc2626;
+          --warning: #f59e0b;
+          --success: #16a34a;
+          --text-muted: #6b7280;
+          --bg: #f3f4f6;
+        }
+
+        * {
+          box-sizing: border-box;
+          font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+        }
+
+        body {
+          margin: 0;
+          background: var(--bg);
+          display: flex;
+          justify-content: center;
+          align-items: flex-start;
+          min-height: 100vh;
+          padding: 40px 16px;
+          color: #1f2937;
+        }
+
+        .container {
+          width: 100%;
+          max-width: 700px;
+          background: white;
+          border-radius: 14px;
+          box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+          overflow: hidden;
+        }
+
+        .header {
+          background: #111827;
+          color: white;
+          padding: 18px 24px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        }
+
+        .logo {
+          background: #065f46;
+          color: white;
+          font-weight: 700;
+          padding: 10px 12px;
+          border-radius: 8px;
+        }
+
+        .header span {
+          font-weight: 600;
+          font-size: 1.1rem;
+        }
+
+        nav a {
+          color: #d1d5db;
+          text-decoration: none;
+          margin-left: 16px;
+          font-size: 0.9rem;
+        }
+
+        nav a:hover {
+          color: white;
+        }
+
+        main {
+          padding: 28px;
+        }
+
+        h1 {
+          font-size: 1.4rem;
+          margin-bottom: 20px;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        }
+
+        label {
+          display: block;
+          margin-top: 12px;
+          margin-bottom: 4px;
+          font-weight: 600;
+          color: var(--text-muted);
+        }
+
+        input, select {
+          width: 100%;
+          padding: 10px;
+          border-radius: 8px;
+          border: 1px solid #d1d5db;
+          background: #f9fafb;
+          color: #1f2937;
+          font-size: 0.95rem;
+        }
+
+        input:focus, select:focus {
+          outline: none;
+          border-color: var(--accent);
+          box-shadow: 0 0 0 2px #bbf7d0;
+        }
+
+        .btn {
+          margin-top: 20px;
+          width: 100%;
+          padding: 10px;
+          border: none;
+          border-radius: 8px;
+          cursor: pointer;
+          font-weight: 700;
+          background: var(--accent);
+          color: white;
+          transition: all 0.2s;
+        }
+
+        .btn:hover {
+          background: #15803d;
+        }
+
+        .message {
+          padding: 10px;
+          border-radius: 8px;
+          font-weight: 600;
+          margin-bottom: 14px;
+        }
+
+        .message.success {
+          background: #dcfce7;
+          border: 1px solid #bbf7d0;
+          color: #166534;
+        }
+
+        .message.error {
+          background: #fee2e2;
+          border: 1px solid #fecaca;
+          color: var(--danger);
+        }
+
+        .menu {
+          margin-top: 20px;
+          border-top: 1px solid #e5e7eb;
+          padding-top: 16px;
+          text-align: center;
+        }
+
+        .menu a {
+          color: var(--text-muted);
+          text-decoration: none;
+          margin: 0 10px;
+          font-size: 0.9rem;
+        }
+
+        .menu a:hover {
+          color: #111827;
+        }
+
+        footer {
+          background: #f9fafb;
+          color: var(--text-muted);
+          font-size: 0.8rem;
+          text-align: center;
+          padding: 12px;
+          border-top: 1px solid #e5e7eb;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header class="header">
+        <div style="display:flex;align-items:center;gap:10px;">
+            <div class="logo">HS</div>
+            <span>HortiSystem</span>
+        </div>
+        <nav>
+            <a th:href="@{/}">🏠 Início</a>
+            <a th:href="@{/produto/lista}">📦 Produtos</a>
+            <a th:href="@{/usuario/lista}">👥 Usuários</a>
+            <a th:href="@{/caixa}">💰 Caixa</a>
+        </nav>
+    </header>
+
+    <main>
+        <h1>➕ Cadastrar Usuário</h1>
+
+        <div th:if="${errorMessage}" class="message error" th:text="${errorMessage}"></div>
+        <div th:if="${successMessage}" class="message success" th:text="${successMessage}"></div>
+
+        <form th:action="@{/usuario/novo}" th:object="${usuario}" method="post">
+            <label for="username">Nome de Usuário</label>
+            <input id="username" type="text" th:field="*{username}" placeholder="Digite o nome de usuário" required>
+
+            <label for="senha">Senha</label>
+            <input id="senha" type="password" th:field="*{password}" placeholder="Digite a senha" required>
+
+
+            <label for="email">Email</label>
+            <input id="email" type="email" th:field="*{email}" placeholder="Digite o email" required>
+
+
+            <label for="role">Função (Role)</label>
+            <select id="role" th:field="*{role}">
+                <option value="ROLE_USER">Usuário</option>
+                <option value="ROLE_ADMIN">Administrador</option>
+            </select>
+
+            <label for="ativo">Ativo</label>
+            <select id="ativo" th:field="*{ativo}">
+                <option value="true">Sim</option>
+                <option value="false">Não</option>
+            </select>
+
+            <label for="consentimentoLgpd">Consentimento LGPD</label>
+            <select id="consentimentoLgpd" th:field="*{consentimentoLgpd}">
+                <option value="true">Aceito</option>
+                <option value="false">Não Aceito</option>
+            </select>
+
+            <button class="btn" type="submit">💾 Salvar Usuário</button>
+        </form>
+
+        <div class="menu">
+            <a th:href="@{/usuario/lista}">👥 Listar Usuários</a>
+            <a th:href="@{/produto/lista}">📦 Ver Produtos</a>
+            <a th:href="@{/caixa}">💰 Ir para o Caixa</a>
+        </div>
+    </main>
+
+    <footer>
+        © <span th:text="${T(java.time.Year).now()}"/> HortiSystem
+    </footer>
+</div>
+</body>
+</html>

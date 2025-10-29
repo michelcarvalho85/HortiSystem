@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>HortiSystem — Lista de Funcionários</title>
+    <style>
+        :root {
+          --accent: #16a34a;
+          --danger: #dc2626;
+          --warning: #f59e0b;
+          --success: #16a34a;
+          --text-muted: #6b7280;
+          --bg: #f3f4f6;
+        }
+
+        * {
+          box-sizing: border-box;
+          font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+        }
+
+        body {
+          margin: 0;
+          background: var(--bg);
+          display: flex;
+          justify-content: center;
+          align-items: flex-start;
+          min-height: 100vh;
+          padding: 40px 16px;
+          color: #1f2937;
+        }
+
+        .container {
+          width: 100%;
+          max-width: 1100px;
+          background: white;
+          border-radius: 14px;
+          box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+          overflow: hidden;
+        }
+
+        /* Topbar */
+        .header {
+          background: #111827;
+          color: white;
+          padding: 18px 24px;
+          display: flex;
+          align-items: center;
+          gap: 10px;
+        }
+
+        .logo {
+          background: #065f46;
+          color: white;
+          font-weight: 700;
+          padding: 10px 12px;
+          border-radius: 8px;
+        }
+
+        .header span {
+          font-weight: 600;
+          font-size: 1.1rem;
+        }
+
+        /* Conteúdo principal */
+        main {
+          padding: 28px;
+        }
+
+        h1 {
+          font-size: 1.4rem;
+          margin-bottom: 16px;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        }
+
+        /* Mensagens */
+        .message {
+          padding: 10px;
+          border-radius: 8px;
+          font-weight: 600;
+          margin-bottom: 14px;
+        }
+
+        .message.success {
+          background: #dcfce7;
+          border: 1px solid #bbf7d0;
+          color: #166534;
+        }
+
+        .message.error {
+          background: #fee2e2;
+          border: 1px solid #fecaca;
+          color: var(--danger);
+        }
+
+        /* Tabela */
+        .table {
+          width: 100%;
+          border-collapse: collapse;
+          background: white;
+          border-radius: 8px;
+          overflow: hidden;
+        }
+
+        th {
+          background: #111827;
+          color: white;
+          text-align: left;
+          padding: 12px 10px;
+          font-weight: 600;
+          font-size: 0.9rem;
+        }
+
+        td {
+          padding: 12px 10px;
+          border-bottom: 1px solid #e5e7eb;
+          font-size: 0.95rem;
+        }
+
+        tr:hover {
+          background: #f9fafb;
+        }
+
+        .empty {
+          text-align: center;
+          color: var(--text-muted);
+          padding: 20px;
+        }
+
+        /* Botões */
+        .btn {
+          display: inline-block;
+          padding: 8px 12px;
+          border: none;
+          border-radius: 8px;
+          cursor: pointer;
+          font-weight: 600;
+          font-size: 0.9rem;
+          transition: all 0.2s;
+        }
+
+        .btn-edit {
+          background: var(--warning);
+          color: #fff;
+        }
+
+        .btn-edit:hover {
+          background: #d97706;
+        }
+
+        .btn-demissao {
+          background: var(--danger);
+          color: #fff;
+        }
+
+        .btn-demissao:hover {
+          background: #b91c1c;
+        }
+
+        .btn-reativar {
+          background: var(--success);
+          color: #fff;
+        }
+
+        .btn-reativar:hover {
+          background: #15803d;
+        }
+
+        /* Menu inferior */
+        .menu {
+          margin-top: 20px;
+          border-top: 1px solid #e5e7eb;
+          padding-top: 16px;
+          text-align: center;
+        }
+
+        .menu a {
+          color: var(--text-muted);
+          text-decoration: none;
+          margin: 0 10px;
+          font-size: 0.9rem;
+        }
+
+        .menu a:hover {
+          color: #111827;
+        }
+
+        footer {
+          background: #f9fafb;
+          color: var(--text-muted);
+          font-size: 0.8rem;
+          text-align: center;
+          padding: 12px;
+          border-top: 1px solid #e5e7eb;
+        }
+
+        @media(max-width: 768px) {
+          main { padding: 20px; }
+          th, td { font-size: 0.85rem; padding: 8px; }
+          .menu { font-size: 0.8rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header class="header">
+        <div class="logo">HS</div>
+        <span>HortiSystem</span>
+    </header>
+
+    <main>
+        <h1>📋 Lista de Funcionários</h1>
+
+        <div th:if="${success}" class="message success">✅ <span th:text="${success}"></span></div>
+        <div th:if="${error}" class="message error">⚠️ <span th:text="${error}"></span></div>
+
+        <div style="overflow-x:auto">
+            <table class="table" role="table" aria-label="Tabela de funcionários">
+                <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>CPF</th>
+                    <th>Cargo</th>
+                    <th>Email</th>
+                    <th>Salário</th>
+                    <th>Status</th>
+                    <th>Ações</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${#lists.isEmpty(funcionarios)}">
+                    <td colspan="7" class="empty">📭 Nenhum funcionário cadastrado</td>
+                </tr>
+
+                <tr th:each="funcionario : ${funcionarios}">
+                    <td th:text="${funcionario.nome}"></td>
+                    <td th:text="${funcionario.cpf}"></td>
+                    <td th:text="${funcionario.cargo}"></td>
+                    <td th:text="${funcionario.email}"></td>
+                    <td th:text="'R$ ' + ${#numbers.formatDecimal(funcionario.salario, 1, 2, 'POINT')}"></td>
+                    <td>
+                        <span th:if="${funcionario.ativo}" style="color:#16a34a;font-weight:600">✅ Ativo</span>
+                        <span th:unless="${funcionario.ativo}" style="color:#dc2626;font-weight:600">⛔ Inativo</span>
+                    </td>
+                    <td>
+                        <a th:href="@{/funcionarios/editar/{id}(id=${funcionario.id})}" class="btn btn-edit">✏️ Editar</a>
+
+                        <form th:if="${funcionario.ativo}" th:action="@{/funcionarios/demitir/{id}(id=${funcionario.id})}" method="post" style="display:inline">
+                            <button type="submit" class="btn btn-demissao" onclick="return confirm('Tem certeza que deseja demitir este funcionário?')">🗑️ Demitir</button>
+                        </form>
+
+                        <form th:unless="${funcionario.ativo}" th:action="@{/funcionarios/reativar/{id}(id=${funcionario.id})}" method="post" style="display:inline">
+                            <button type="submit" class="btn btn-reativar">🔄 Reativar</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="menu">
+            <a th:href="@{/funcionarios/novo}">👥 Cadastrar Novo Funcionário</a>
+            <a th:href="@{/produto/lista}">📦 Ver Produtos</a>
+            <a th:href="@{/vendas}">💰 Ir para Vendas</a>
+        </div>
+    </main>
+
+    <footer>
+        © <span th:text="${T(java.time.Year).now()}"/> HortiSystem
+    </footer>
+</div>
+</body>
+</html>
