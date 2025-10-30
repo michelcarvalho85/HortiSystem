@@ -2,8 +2,10 @@
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>HortiSystem — Lista de Produtos</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>HortiSystem — Log de Eventos</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
     <style>
         :root {
             --accent: #16a34a;
@@ -34,11 +36,11 @@
             max-width: 1100px;
             background: white;
             border-radius: 14px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
             overflow: hidden;
         }
 
-        /* Topbar */
+        /* Cabeçalho */
         .header {
             background: #111827;
             color: white;
@@ -73,7 +75,7 @@
             gap: 8px;
         }
 
-        /* Barra superior (menu verde) */
+        /* Menu superior */
         .menu-superior {
             display: flex;
             justify-content: center;
@@ -101,7 +103,7 @@
             transform: scale(1.03);
         }
 
-        /* Filtros */
+        /* Barra de busca/filtro */
         .controls {
             display: flex;
             gap: 12px;
@@ -132,7 +134,7 @@
             background: #15803d;
         }
 
-        /* Tabela */
+        /* Tabela de logs */
         table {
             width: 100%;
             border-collapse: collapse;
@@ -154,41 +156,10 @@
             background: #f9fafb;
         }
 
-        .actions {
-            display: flex;
-            gap: 6px;
-        }
-
-        .btn-edit {
-            background: var(--warning);
-            color: white;
-            border: none;
-            padding: 6px 10px;
-            border-radius: 6px;
-            cursor: pointer;
-        }
-
-        .btn-edit:hover {
-            background: #d97706;
-        }
-
-        .btn-del {
-            background: var(--danger);
-            color: white;
-            border: none;
-            padding: 6px 10px;
-            border-radius: 6px;
-            cursor: pointer;
-        }
-
-        .btn-del:hover {
-            background: #b91c1c;
-        }
-
         .empty {
             text-align: center;
-            padding: 24px;
             color: var(--text-muted);
+            padding: 20px;
         }
 
         footer {
@@ -215,42 +186,44 @@
     </header>
 
     <main>
-        <h1>📋 Lista de Produtos</h1>
+        <h1>🧾 Log de Eventos do Sistema</h1>
 
-        <!-- 🔼 Menu Superior de Ações -->
+        <!-- Menu verde -->
         <div class="menu-superior">
-            <a th:href="@{/produto/novo}">➕ Cadastrar Produto</a>
-            <a th:href="@{/funcionarios/lista}">👥 Ver Funcionários</a>
-            <a th:href="@{/}">🏠 Voltar ao Início</a>
+            <a th:href="@{/produto/lista}">📦 Produtos</a>
+            <a th:href="@{/funcionarios/lista}">👥 Funcionários</a>
+            <a th:href="@{/vendas}">💰 Vendas</a>
+            <a th:href="@{/relatorios}">📊 Relatórios</a>
+            <a th:href="@{/}">🏠 Início</a>
         </div>
 
-        <!-- Campos de filtro -->
+        <!-- Filtros -->
         <div class="controls">
-            <input type="text" id="searchInput" placeholder="Buscar por nome...">
-            <select id="categoriaFilter">
-                <option value="">Todas as categorias</option>
-                <option value="Fruta">Frutas</option>
-                <option value="Verdura">Verduras</option>
-                <option value="Legume">Legumes</option>
+            <input type="text" id="usuarioFiltro" placeholder="Filtrar por usuário...">
+            <select id="nivelFiltro">
+                <option value="">Todos os níveis</option>
+                <option value="INFO">Info</option>
+                <option value="WARN">Aviso</option>
+                <option value="ERROR">Erro</option>
             </select>
-            <button class="btn" id="btnFilter">🔍 Filtrar</button>
+            <button class="btn" id="btnFiltrar">🔍 Filtrar</button>
         </div>
 
+        <!-- Tabela de logs -->
         <div style="overflow:auto;">
-            <table id="produtosTable">
+            <table id="tabelaLogs">
                 <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Nome</th>
-                    <th>Categoria</th>
-                    <th>Quantidade</th>
-                    <th>Valor (R$)</th>
-                    <th>Unidade</th>
-                    <th>Ações</th>
+                    <th>Data/Hora</th>
+                    <th>Usuário</th>
+                    <th>Ação</th>
+                    <th>Recurso</th>
+                    <th>Nível</th>
+                    <th>IP</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr><td colspan="7" class="empty">Carregando produtos...</td></tr>
+                <tr><td colspan="6" class="empty">Carregando logs...</td></tr>
                 </tbody>
             </table>
         </div>
@@ -262,53 +235,38 @@
 </div>
 
 <script>
-    async function carregarProdutos() {
+    async function carregarLogs() {
         try {
-            const res = await fetch('/produto/todos');
-            const produtos = await res.json();
-            const tbody = document.querySelector('#produtosTable tbody');
+            const res = await fetch('/logs/eventos'); // Endpoint do backend
+            const logs = await res.json();
+            const tbody = document.querySelector('#tabelaLogs tbody');
             tbody.innerHTML = '';
 
-            if (!produtos || produtos.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="7" class="empty">Nenhum produto cadastrado.</td></tr>';
+            if (!logs || logs.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" class="empty">Nenhum log encontrado.</td></tr>';
                 return;
             }
 
-            produtos.forEach(p => {
+            logs.forEach(log => {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
-          <td>${p.id}</td>
-          <td>${p.nome}</td>
-          <td>${p.categoria}</td>
-          <td>${p.quantidade}</td>
-          <td>R$ ${p.valor.toFixed(2)}</td>
-          <td>${p.unidadeMedida}</td>
-          <td class="actions">
-              <button class="btn-edit" onclick="window.location.href='/produto/editar/${p.id}'">✏️</button>
-              <button class="btn-del" onclick="excluirProduto(${p.id})">🗑️</button>
-          </td>
+          <td>${log.dataHora}</td>
+          <td>${log.usuario || 'Sistema'}</td>
+          <td>${log.acao}</td>
+          <td>${log.recurso}</td>
+          <td>${log.nivel}</td>
+          <td>${log.ip}</td>
         `;
                 tbody.appendChild(tr);
             });
         } catch (err) {
             console.error(err);
+            document.querySelector('#tabelaLogs tbody').innerHTML =
+                '<tr><td colspan="6" class="empty">Erro ao carregar logs.</td></tr>';
         }
     }
 
-    function filtrarProdutos() {
-        alert('Funcionalidade de filtro em desenvolvimento!');
-    }
-
-    function excluirProduto(id) {
-        if (confirm('Tem certeza que deseja excluir este produto?')) {
-            alert('Excluir produto ID: ' + id + ' — em desenvolvimento');
-        }
-    }
-
-    document.addEventListener('DOMContentLoaded', function () {
-        carregarProdutos();
-        document.getElementById('btnFilter').addEventListener('click', filtrarProdutos);
-    });
+    document.addEventListener('DOMContentLoaded', carregarLogs);
 </script>
 </body>
 </html>

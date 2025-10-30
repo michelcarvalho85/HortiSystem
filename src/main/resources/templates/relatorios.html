@@ -1,47 +1,176 @@
 <!doctype html>
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 <head>
-    
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Relatórios - HortiSystem</title>
+    <title>HortiSystem — Relatórios</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
     <style>
-        body { font-family: Inter, Arial, sans-serif; margin: 0; background: #ffffff; }
-        .content { max-width: 1200px; margin: 20px auto; padding: 20px; }
-        h2 { font-size: 24px; margin-bottom: 8px; color: #333; }
-        p { color: #666; font-size: 14px; margin-bottom: 20px; }
+        :root {
+            --accent: #16a34a;
+            --bg: #f3f4f6;
+            --text-muted: #6b7280;
+            --danger: #dc2626;
+        }
+
+        * {
+            box-sizing: border-box;
+            font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+        }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 40px 16px;
+            color: #1f2937;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1100px;
+            background: white;
+            border-radius: 14px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+
+        /* Cabeçalho padrão */
+        .header {
+            background: #111827;
+            color: white;
+            padding: 18px 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo {
+            background: #065f46;
+            color: white;
+            font-weight: 700;
+            padding: 10px 12px;
+            border-radius: 8px;
+        }
+
+        .header span {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        main {
+            padding: 28px;
+        }
+
+        h1 {
+            font-size: 1.4rem;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        p {
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        /* 🔼 Menu superior padrão */
+        .menu-superior {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            background: #ecfdf5;
+            border: 1px solid #bbf7d0;
+            border-radius: 10px;
+            padding: 12px;
+            margin-bottom: 24px;
+        }
+
+        .menu-superior a {
+            text-decoration: none;
+            color: white;
+            background: var(--accent);
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .menu-superior a:hover {
+            background: #15803d;
+            transform: scale(1.03);
+        }
+
+        /* Área do Power BI */
         .report-container {
             width: 100%;
             height: 80vh;
-            border: 1px solid #ddd;
+            border: 1px solid #e5e7eb;
             border-radius: 8px;
             overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
         }
+
         iframe {
             width: 100%;
             height: 100%;
             border: none;
         }
+
+        footer {
+            background: #f9fafb;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            text-align: center;
+            padding: 12px;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        @media(max-width: 768px) {
+            main { padding: 20px; }
+            .menu-superior a { font-size: 0.85rem; }
+            h1 { font-size: 1.2rem; }
+        }
     </style>
 </head>
 <body>
+<div class="container">
+    <header class="header">
+        <div class="logo">HS</div>
+        <span>HortiSystem</span>
+    </header>
 
-<!-- Reutiliza o topo do index -->
-<header th:replace="index :: header"></header>
+    <main>
+        <h1>📊 Relatórios do Sistema</h1>
 
-<div class="content">
-    <h2>📊 Relatórios do Sistema</h2>
-    <p>Acompanhe indicadores do negócio diretamente pelo painel integrado do Power BI.</p>
-    <!-- Chama o link do power bi publico -->
-    <div class="report-container">
-        <iframe title="Relatório Power BI"
-                src="https://app.powerbi.com/view?r=eyJrIjoiZWUwMmZkNzctMjAzYS00NGUwLTgzNzQtNTAyNWJjYTRlYTE0IiwidCI6ImY2NjVhZTMyLTViM2EtNGI4OC05YzUyLWVkYTBkMDFiYzU2YSJ9"
-                allowFullScreen="true">
-        </iframe>
-    </div>
+        <!-- 🔼 Menu superior -->
+        <div class="menu-superior">
+            <a th:href="@{/produto/lista}">📦 Produtos</a>
+            <a th:href="@{/funcionarios/lista}">👥 Funcionários</a>
+            <a th:href="@{/vendas}">💰 Vendas</a>
+            <a th:href="@{/}">🏠 Início</a>
+        </div>
+
+        <p>Acompanhe os principais indicadores e métricas do negócio diretamente pelo painel integrado do Power BI.</p>
+
+        <div class="report-container">
+            <iframe
+                    title="Relatório Power BI"
+                    src="https://app.powerbi.com/view?r=eyJrIjoiZWUwMmZkNzctMjAzYS00NGUwLTgzNzQtNTAyNWJjYTRlYTE0IiwidCI6ImY2NjVhZTMyLTViM2EtNGI4OC05YzUyLWVkYTBkMDFiYzU2YSJ9"
+                    allowFullScreen="true">
+            </iframe>
+        </div>
+    </main>
+
+    <footer>
+        © <span th:text="${T(java.time.Year).now()}"/> HortiSystem
+    </footer>
 </div>
-
 </body>
 </html>
