@@ -13,3 +13,5 @@
 [2025-10-27 02:09:25] Usuário: admin | Ação: PRODUCT.UPDATE | Detalhes: Produto id=1 nome=Tomato
 [2025-10-29 15:53:27] Usuário: root | Ação: PRODUCT.CREATE | Detalhes: Produto id=8 nome=Morango
 [2025-10-29 15:54:57] Usuário: root | Ação: PRODUCT.UPDATE | Detalhes: Produto id=8 nome=Morango
+[2025-10-29 17:59:41] Usuário: root | Ação: PRODUCT.UPDATE | Detalhes: Produto id=1 nome=Tomate
+[2025-10-29 17:59:53] Usuário: root | Ação: PRODUCT.UPDATE | Detalhes: Produto id=1 nome=Tomate
